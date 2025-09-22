@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    { "source": "/Bobji.html/**", "destination": "/Bobji.html" },
+    { "source": "/twitter.html/**", "destination": "/iik.html" },
+    { "source": "/iikd.html/**", "destination": "/iikd.html" },
+    { "source": "/hjjs.html/**", "destination": "/hjjs.html" }
+  ]
+}
