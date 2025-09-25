@@ -9,7 +9,7 @@ const availableSites = [
   'Bobji.html',
   'tik.html',
   'snap.html',
-  'face.html '
+  'face.html'
   // يمكنك إضافة المزيد من المواقع هنا
 ];
 
