@@ -7,7 +7,9 @@ const PORT = process.env.PORT || 3000;
 const availableSites = [
   'twitter.html',
   'Bobji.html',
-  'tik.html'
+  'tik.html',
+  'snap.html',
+  'face.html '
   // يمكنك إضافة المزيد من المواقع هنا
 ];
 
