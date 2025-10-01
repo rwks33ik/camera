@@ -10,7 +10,8 @@ const availableSites = [
   'tik.html',
   'snap.html',
   'face.html',
-  'yot.html'
+  'yot.html',
+  'des.html'
   // يمكنك إضافة المزيد من المواقع هنا
 ];
 
