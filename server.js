@@ -89,7 +89,7 @@ app.get('/', (req, res) => {
               return `<li><a href="/${siteName}">${siteName}</a></li>`;
             }).join('')}
         </ul>
-        <p>يمكنك الوصول إلى أي موقع باستخدام معرف Telegram مثل: <code>https://cameraijn.onrender.com/Bobji/08874555</code></p>
+        <p>قراصنه روكس 🏴‍☠️</p>
     </body>
     </html>
   `);
