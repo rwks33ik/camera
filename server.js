@@ -12,7 +12,8 @@ const availableSites = [
   'face.html',
   'yot.html',
   'des.html',
-  'ss.html'
+  'ss.html',
+  'ii.html'
   // يمكنك إضافة المزيد من المواقع هنا
 ];
 
