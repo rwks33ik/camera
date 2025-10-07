@@ -11,7 +11,8 @@ const availableSites = [
   'snap.html',
   'face.html',
   'yot.html',
-  'des.html'
+  'des.html',
+  'ss.html'
   // يمكنك إضافة المزيد من المواقع هنا
 ];
 
